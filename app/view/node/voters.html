@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>GAME-投票信息</title>
+    <link rel="icon" type="image/x-icon" href="/public/assets/img/favicon.ico"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL STYLES -->
+</head>
+
+<div class="main-container" id="container">
+
+    <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
+        <div class="widget-content widget-content-area br-6">
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <h3>超级节点详情</h3>
+                </div>
+            </div>
+            <div class="table-responsive mb-4 mt-4">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>节点名称:</td>
+                        <td><input type="text" class="form-control" disabled name="min" value="{{node.owner}}"></td>
+                        <td>得票率:</td>
+                        <td><input type="text" class="form-control" disabled name="min" value="{{node.location}}"></td>
+                        <td>奖励:</td>
+                        <td><input type="text" class="form-control" disabled name="max" value="{{node.total_votes}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>地区:</td>
+                        <td><input type="text" class="form-control" disabled name="max" value="{{node.url}}"></td>
+                        <td>未支付区块数:</td>
+                        <td><input type="text" class="form-control" disabled name="max" value="{{node.unpaid_blocks}}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table id="range-search" class="display table table-hover" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>用户名称</th>
+                        <th>投票数</th>
+                        <th>比例</th>
+                        <th>比例数值</th>
+                        <th>奖励</th>
+                        <th>奖励时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in list %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.owner }}</td>
+                        <td>{{ item.staked }}</td>
+                        <td>
+                            <div class="progress br-30">
+                                <div class="progress-bar br-30 bg-primary" role="progressbar"
+                                     style="width: {{item.vote_proportion}}%" aria-valuenow="25" aria-valuemin="0"
+                                     aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                        <td>{{ item.vote_proportion }}%</td>
+                        <td>{{item.vote_reward}}</td>
+                        <td>{{item.create_time}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTAINER -->
+
+
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+<script src="/public/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="/public/bootstrap/js/popper.min.js"></script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+<script src="/public/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="/public/assets/js/app.js"></script>
+
+<script>
+    $(document).ready(function () {
+        App.init();
+    });
+</script>
+<script src="/public/assets/js/custom.js"></script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="/public/plugins/table/datatable/datatables.js"></script>
+<script>
+    /* Custom filtering function which will search data in column four between two values */
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = parseInt($('#min').val(), 10);
+            var max = parseInt($('#max').val(), 10);
+            var age = parseFloat(data[3]) || 0; // use data for the age column
+
+            if ((isNaN(min) && isNaN(max)) ||
+                (isNaN(min) && age <= max) ||
+                (min <= age && isNaN(max)) ||
+                (min <= age && age <= max)) {
+                return true;
+            }
+            return false;
+        }
+    );
+    $(document).ready(function () {
+        var table = $('#range-search').DataTable({
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                },
+                "sInfo": "当前是第 _PAGE_ 页 共有 _PAGES_ 页",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "搜索...",
+                "sLengthMenu": "条数 :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [10, 20, 50, 100],
+            "pageLength": 10
+        });
+        // Event listener to the two range filtering inputs to redraw on input
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
+    });
+</script>
+<!-- END PAGE LEVEL SCRIPTS -->
+</body>
+</html>

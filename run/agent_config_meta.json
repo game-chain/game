@@ -1,0 +1,407 @@
+{
+  "security": {
+    "csrf": {
+      "enable": "D:\\project\\node\\game\\config\\config.default.js",
+      "type": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "ignoreJSON": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "useSession": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "cookieName": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "sessionName": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "headerName": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "bodyName": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "queryName": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "refererWhiteList": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "domainWhiteList": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+    "protocolWhiteList": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+    "defaultMiddleware": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+    "xframe": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "hsts": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.local.js",
+      "maxAge": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "includeSubdomains": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "dta": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "methodnoallow": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "noopen": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "nosniff": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "referrerPolicy": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "xssProtection": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "csp": {
+      "enable": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "policy": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "ssrf": {
+      "ipBlackList": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js",
+      "checkAddress": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+    }
+  },
+  "keys": "D:\\project\\node\\game\\config\\config.default.js",
+  "systems": {
+    "key": "D:\\project\\node\\game\\config\\config.default.js",
+    "appName": "D:\\project\\node\\game\\config\\config.default.js",
+    "version": "D:\\project\\node\\game\\config\\config.default.js",
+    "author": "D:\\project\\node\\game\\config\\config.default.js"
+  },
+  "eos": {
+    "account": "D:\\project\\node\\game\\config\\config.default.js",
+    "privateKey": "D:\\project\\node\\game\\config\\config.default.js",
+    "rpcUrl": "D:\\project\\node\\game\\config\\config.default.js",
+    "table": "D:\\project\\node\\game\\config\\config.default.js",
+    "scope": "D:\\project\\node\\game\\config\\config.default.js",
+    "code": "D:\\project\\node\\game\\config\\config.default.js",
+    "gameApi": "D:\\project\\node\\game\\config\\config.default.js"
+  },
+  "router": "D:\\project\\node\\game\\config\\config.default.js",
+  "jwt": {
+    "secret": "D:\\project\\node\\game\\config\\config.default.js",
+    "expires": "D:\\project\\node\\game\\config\\config.default.js",
+    "enable": "D:\\project\\node\\game\\node_modules\\egg-jwt\\config\\config.default.js"
+  },
+  "sequelize": {
+    "dialect": "D:\\project\\node\\game\\config\\config.default.js",
+    "database": "D:\\project\\node\\game\\config\\config.default.js",
+    "host": "D:\\project\\node\\game\\config\\config.default.js",
+    "username": "D:\\project\\node\\game\\config\\config.default.js",
+    "password": "D:\\project\\node\\game\\config\\config.default.js",
+    "port": "D:\\project\\node\\game\\config\\config.default.js",
+    "timezone": "D:\\project\\node\\game\\config\\config.default.js",
+    "dialectOptions": {
+      "typeCast": "D:\\project\\node\\game\\config\\config.default.js"
+    },
+    "define": {
+      "freezeTableName": "D:\\project\\node\\game\\config\\config.default.js",
+      "timestamps": "D:\\project\\node\\game\\config\\config.default.js",
+      "paranoid": "D:\\project\\node\\game\\config\\config.default.js",
+      "underscored": "D:\\project\\node\\game\\config\\config.default.js"
+    },
+    "pool": {
+      "max": "D:\\project\\node\\game\\config\\config.default.js",
+      "min": "D:\\project\\node\\game\\config\\config.default.js",
+      "idle": "D:\\project\\node\\game\\config\\config.default.js"
+    },
+    "retry": {
+      "max": "D:\\project\\node\\game\\config\\config.default.js"
+    }
+  },
+  "redis": {
+    "client": {
+      "port": "D:\\project\\node\\game\\config\\config.default.js",
+      "host": "D:\\project\\node\\game\\config\\config.default.js",
+      "password": "D:\\project\\node\\game\\config\\config.default.js",
+      "db": "D:\\project\\node\\game\\config\\config.default.js"
+    },
+    "default": "D:\\project\\node\\game\\node_modules\\egg-redis\\config\\config.default.js",
+    "app": "D:\\project\\node\\game\\node_modules\\egg-redis\\config\\config.default.js",
+    "agent": "D:\\project\\node\\game\\node_modules\\egg-redis\\config\\config.default.js",
+    "supportTimeCommand": "D:\\project\\node\\game\\node_modules\\egg-redis\\config\\config.default.js"
+  },
+  "kue": {
+    "app": "D:\\project\\node\\game\\config\\config.default.js",
+    "agent": "D:\\project\\node\\game\\config\\config.default.js",
+    "client": {
+      "queuePrefix": "D:\\project\\node\\game\\config\\config.default.js",
+      "redis": {
+        "port": "D:\\project\\node\\game\\config\\config.default.js",
+        "host": "D:\\project\\node\\game\\config\\config.default.js",
+        "auth": "D:\\project\\node\\game\\config\\config.default.js",
+        "db": "D:\\project\\node\\game\\config\\config.default.js",
+        "options": "D:\\project\\node\\game\\config\\config.default.js"
+      }
+    }
+  },
+  "schex": {
+    "client": {
+      "port": "D:\\project\\node\\game\\config\\config.default.js",
+      "host": "D:\\project\\node\\game\\config\\config.default.js",
+      "db": "D:\\project\\node\\game\\config\\config.default.js",
+      "keyPre": "D:\\project\\node\\game\\config\\config.default.js",
+      "checkInterval": "D:\\project\\node\\game\\config\\config.default.js",
+      "jobInitCfg": "D:\\project\\node\\game\\config\\config.default.js"
+    },
+    "directory": "D:\\project\\node\\game\\node_modules\\egg-schex\\config\\config.default.js"
+  },
+  "view": {
+    "defaultViewEngine": "D:\\project\\node\\game\\config\\config.default.js",
+    "mapping": {
+      ".html": "D:\\project\\node\\game\\config\\config.default.js"
+    },
+    "root": "D:\\project\\node\\game\\node_modules\\egg-view\\config\\config.default.js",
+    "cache": "D:\\project\\node\\game\\node_modules\\egg-view\\config\\config.local.js",
+    "defaultExtension": "D:\\project\\node\\game\\node_modules\\egg-view\\config\\config.default.js"
+  },
+  "notfound": {
+    "pageUrl": "D:\\project\\node\\game\\config\\config.default.js"
+  },
+  "middleware": "D:\\project\\node\\game\\config\\config.default.js",
+  "session": {
+    "maxAge": "D:\\project\\node\\game\\node_modules\\egg-session\\config\\config.default.js",
+    "key": "D:\\project\\node\\game\\node_modules\\egg-session\\config\\config.default.js",
+    "httpOnly": "D:\\project\\node\\game\\node_modules\\egg-session\\config\\config.default.js",
+    "encrypt": "D:\\project\\node\\game\\node_modules\\egg-session\\config\\config.default.js"
+  },
+  "helper": {
+    "shtml": "D:\\project\\node\\game\\node_modules\\egg-security\\config\\config.default.js"
+  },
+  "jsonp": {
+    "limit": "D:\\project\\node\\game\\node_modules\\egg-jsonp\\config\\config.default.js",
+    "callback": "D:\\project\\node\\game\\node_modules\\egg-jsonp\\config\\config.default.js",
+    "csrf": "D:\\project\\node\\game\\node_modules\\egg-jsonp\\config\\config.default.js"
+  },
+  "onerror": {
+    "errorPageUrl": "D:\\project\\node\\game\\node_modules\\egg-onerror\\config\\config.default.js",
+    "appErrorFilter": "D:\\project\\node\\game\\node_modules\\egg-onerror\\config\\config.default.js",
+    "templatePath": "D:\\project\\node\\game\\node_modules\\egg-onerror\\config\\config.default.js"
+  },
+  "i18n": {
+    "defaultLocale": "D:\\project\\node\\game\\node_modules\\egg-i18n\\config\\config.default.js",
+    "dirs": "D:\\project\\node\\game\\node_modules\\egg-i18n\\config\\config.default.js",
+    "queryField": "D:\\project\\node\\game\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieField": "D:\\project\\node\\game\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieDomain": "D:\\project\\node\\game\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieMaxAge": "D:\\project\\node\\game\\node_modules\\egg-i18n\\config\\config.default.js"
+  },
+  "watcher": {
+    "type": "D:\\project\\node\\game\\node_modules\\egg-watcher\\config\\config.local.js",
+    "eventSources": {
+      "default": "D:\\project\\node\\game\\node_modules\\egg-watcher\\config\\config.default.js",
+      "development": "D:\\project\\node\\game\\node_modules\\egg-watcher\\config\\config.default.js"
+    }
+  },
+  "customLogger": {
+    "scheduleLogger": {
+      "consoleLevel": "D:\\project\\node\\game\\node_modules\\egg-schedule\\config\\config.default.js",
+      "file": "D:\\project\\node\\game\\node_modules\\egg-schedule\\config\\config.default.js"
+    },
+    "schexLogger": {
+      "consoleLevel": "D:\\project\\node\\game\\node_modules\\egg-schex\\config\\config.default.js",
+      "file": "D:\\project\\node\\game\\node_modules\\egg-schex\\config\\config.default.js"
+    }
+  },
+  "schedule": {
+    "directory": "D:\\project\\node\\game\\node_modules\\egg-schedule\\config\\config.default.js"
+  },
+  "multipart": {
+    "mode": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "autoFields": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "defaultCharset": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fieldNameSize": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fieldSize": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fields": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fileSize": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "files": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fileExtensions": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "whitelist": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "tmpdir": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js",
+    "cleanSchedule": {
+      "cron": "D:\\project\\node\\game\\node_modules\\egg-multipart\\config\\config.default.js"
+    }
+  },
+  "development": {
+    "watchDirs": "D:\\project\\node\\game\\node_modules\\egg-development\\config\\config.default.js",
+    "ignoreDirs": "D:\\project\\node\\game\\node_modules\\egg-development\\config\\config.default.js",
+    "fastReady": "D:\\project\\node\\game\\node_modules\\egg-development\\config\\config.default.js",
+    "reloadOnDebug": "D:\\project\\node\\game\\node_modules\\egg-development\\config\\config.default.js",
+    "overrideDefault": "D:\\project\\node\\game\\node_modules\\egg-development\\config\\config.default.js"
+  },
+  "logrotator": {
+    "filesRotateByHour": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "hourDelimiter": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "filesRotateBySize": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxFileSize": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxFiles": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "rotateDuration": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxDays": "D:\\project\\node\\game\\node_modules\\egg-logrotator\\config\\config.default.js"
+  },
+  "static": {
+    "prefix": "D:\\project\\node\\game\\node_modules\\egg-static\\config\\config.default.js",
+    "dir": "D:\\project\\node\\game\\node_modules\\egg-static\\config\\config.default.js",
+    "dynamic": "D:\\project\\node\\game\\node_modules\\egg-static\\config\\config.default.js",
+    "preload": "D:\\project\\node\\game\\node_modules\\egg-static\\config\\config.default.js",
+    "buffer": "D:\\project\\node\\game\\node_modules\\egg-static\\config\\config.default.js",
+    "maxFiles": "D:\\project\\node\\game\\node_modules\\egg-static\\config\\config.default.js"
+  },
+  "validate": "D:\\project\\node\\game\\node_modules\\egg-validate\\config\\config.default.js",
+  "nunjucks": {
+    "autoescape": "D:\\project\\node\\game\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "throwOnUndefined": "D:\\project\\node\\game\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "trimBlocks": "D:\\project\\node\\game\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "lstripBlocks": "D:\\project\\node\\game\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "cache": "D:\\project\\node\\game\\node_modules\\egg-view-nunjucks\\config\\config.local.js"
+  },
+  "env": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "name": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "cookies": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "proxy": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "maxIpsCount": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "maxProxyCount": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "protocolHeaders": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "ipHeaders": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "hostHeaders": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "pkg": {
+    "name": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "version": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "description": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "private": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "egg": {
+      "declarations": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "dependencies": {
+      "block_io": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "blockchain.info": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-jwt": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-kue": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-redis": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-schex": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-scripts": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-sequelize": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-validate": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-view-nunjucks": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "eosjs": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "eosjs-ecc": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "fecha": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "moment": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "mysql2": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "node-fetch": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "ripple-lib": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "simpleflakes": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "tronweb": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "web3": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "devDependencies": {
+      "autod": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "autod-egg": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-bin": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-ci": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "egg-mock": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "eslint": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "eslint-config-egg": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "engines": {
+      "node": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "scripts": {
+      "start": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "stop": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "dev": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "debug": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "lint": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "ci": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "autod": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "ci": {
+      "version": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "repository": {
+      "type": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "url": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "author": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "license": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "baseDir": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "HOME": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "rundir": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "dump": {
+    "ignore": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "confusedConfigurations": {
+    "bodyparser": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "notFound": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "sitefile": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "middlewares": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "httpClient": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "siteFile": {
+    "/favicon.ico": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "bodyParser": {
+    "enable": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "encoding": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "formLimit": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "jsonLimit": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "textLimit": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "strict": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "queryString": {
+      "arrayLimit": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "depth": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "parameterLimit": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "onerror": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "logger": {
+    "dir": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "encoding": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "env": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "level": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "consoleLevel": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "disableConsoleAfterReady": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "outputJSON": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "buffer": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "appLogName": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "coreLogName": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "agentLogName": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "errorLogName": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "coreLogger": {
+      "consoleLevel": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.local.js"
+    },
+    "allowDebugAtProd": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "httpclient": {
+    "enableDNSCache": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "dnsCacheLookupInterval": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "dnsCacheMaxLength": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "request": {
+      "timeout": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "httpAgent": {
+      "keepAlive": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "freeSocketTimeout": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "maxSockets": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "maxFreeSockets": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    },
+    "httpsAgent": {
+      "keepAlive": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "freeSocketTimeout": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "maxSockets": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "maxFreeSockets": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "meta": {
+    "enable": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "logging": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "coreMiddleware": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "workerStartTimeout": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "serverTimeout": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+  "cluster": {
+    "listen": {
+      "path": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "port": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+      "hostname": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "clusterClient": {
+    "maxWaitTime": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js",
+    "responseTimeout": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+  },
+  "onClientError": "D:\\project\\node\\game\\node_modules\\egg\\config\\config.default.js"
+}

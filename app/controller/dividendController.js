@@ -1,0 +1,46 @@
+'use strict';
+
+const Controller = require('../core/baseController');
+
+class dividendController extends Controller {
+
+    /**
+     * 获取投票用户奖励总额
+     * @returns {Promise<void>}
+     */
+    async getAmount() {
+        const {ctx} = this;
+        try {
+            ctx.validate({
+                owner: {type: 'string'},
+            });
+            const param = ctx.request.body;
+            let result = {};
+            result.total = await ctx.service.dividendService.getOwnerTotalAmount(param.owner);
+            this.success(result);
+        } catch (err) {
+            this.fail(err.message, err.errors, ctx.PARAM_ERROR_CODE);
+        }
+    }
+
+    /**
+     * 获取投票用户奖励详情
+     * @returns {Promise<void>}
+     */
+    async getDetails() {
+        const {ctx} = this;
+        try {
+            ctx.validate({
+                owner: {type: 'string', required: true},
+                page: {type: 'number', required: false},
+                limit: {type: 'number', required: false},
+            });
+            const param = ctx.request.body;
+            this.success(await ctx.service.dividendService.getDetails(param.owner, param.pge, param.limit));
+        } catch (err) {
+            this.fail(err.message, err.errors, ctx.PARAM_ERROR_CODE);
+        }
+    }
+}
+
+module.exports = dividendController;

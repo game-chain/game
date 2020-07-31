@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>GAME-超级节点信息</title>
+    <link rel="icon" type="image/x-icon" href="/public/assets/img/favicon.ico"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="/public/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL STYLES -->
+</head>
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
+
+<!--  BEGIN NAVBAR  -->
+<div class="header-container fixed-top">
+    <header class="header navbar navbar-expand-sm">
+        <ul class="navbar-nav theme-brand flex-row  text-center">
+            <li class="nav-item theme-logo">
+                <a href="/">
+                    <img src="/public/assets/img/90x90.jpg" class="navbar-logo" alt="logo">
+                </a>
+            </li>
+            <li class="nav-item theme-text">
+                <a href="/" class="nav-link"> GAME </a>
+            </li>
+            <li class="nav-item toggle-sidebar">
+                <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-list">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3" y2="6"></line>
+                        <line x1="3" y1="12" x2="3" y2="12"></line>
+                        <line x1="3" y1="18" x2="3" y2="18"></line>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-item flex-row search-ul">
+            <li class="nav-item align-self-center search-animated">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="feather feather-search toggle-search">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <form class="form-inline search-full form-inline search" role="search">
+                    <div class="search-bar">
+                        <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
+                    </div>
+                </form>
+            </li>
+        </ul>
+        <ul class="navbar-item flex-row navbar-dropdown">
+            <li class="nav-item dropdown message-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-message-circle">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span class="badge badge-primary"></span>
+                </a>
+                <div class="dropdown-menu p-0 position-absolute animated fadeInUp" aria-labelledby="messageDropdown">
+                    <div class="">
+                        <a class="dropdown-item">
+                            <div class="">
+                                <div class="media">
+                                    <div class="user-img">
+                                        <div class="avatar avatar-xl">
+                                            <span class="avatar-title rounded-circle">通知</span>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="">
+                                            <h5 class="usr-name">暂无</h5>
+                                            <p class="msg-title">无消息</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-bell">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="badge badge-success"></span>
+                </a>
+                <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="notificationDropdown">
+                    <div class="notification-scroll">
+
+                        <div class="dropdown-item">
+                            <div class="media server-log">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-server">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                    <line x1="6" y1="6" x2="6" y2="6"></line>
+                                    <line x1="6" y1="18" x2="6" y2="18"></line>
+                                </svg>
+                                <div class="media-body">
+                                    <div class="data-info">
+                                        <h6 class="">暂无代办事项</h6>
+                                        <p class="">1分钟前</p>
+                                    </div>
+
+                                    <div class="icon-status">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-settings">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </a>
+                <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="userProfileDropdown">
+                    <div class="user-profile-section">
+                        <div class="media mx-auto">
+                            <img src="/public/assets/img/90x90.jpg" class="img-fluid mr-2" alt="avatar">
+                            <div class="media-body">
+                                <h5>管理员</h5>
+                                <p>欢迎登录</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">
+                        <a href="user_profile.html">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-user">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>个人中心</span>
+                        </a>
+                    </div>
+                    <div class="dropdown-item">
+                        <a href="/outLogin">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-log-out">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            <span>退出登录</span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--  END NAVBAR  -->
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+    <!--  BEGIN SIDEBAR  -->
+    <div class="sidebar-wrapper sidebar-theme">
+        <nav id="sidebar">
+            <ul class="list-unstyled menu-categories" id="accordionExample">
+                <li class="menu active">
+                    <a href="/" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-home">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>驾驶舱</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-chevron-right">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="dashboard"
+                        data-parent="#accordionExample">
+                        <li class="active">
+                            <a href="/node"> 超级节点 </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu md-visible menu-heading">
+                    <div class="heading">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-minus">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>Apps</span></div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!--  END SIDEBAR  -->
+
+    <!--  BEGIN CONTENT AREA  -->
+    <div id="content" class="main-content">
+        <!-- 设置周期 -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="ftFormArray" class="col-lg-12 layout-spacing ">
+                        <div>
+                            <div class="widget-header">
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 pt-5 pb-5 text-center">
+                                        <h4>发放周期设置</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-100">
+                                <form method="post" action="/cycle">
+                                    <div class="form-group mb-4">
+                                        <input type="text" class="form-control" name="cycle" placeholder="天数"
+                                               value="{{rewardTime}}"
+                                               autocomplete="off">
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="modal-heading mb-4 mt-2">说明</h4>
+                                        <p class="modal-text">1.周期单位为天数;</p>
+                                        <p class="modal-text">2.周期设置后开始奖励时间为当前时间加上设置的天数;</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
+                                            取消
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" id="cycle_submit">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-px-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content widget-content-area text-right split-buttons">
+                    <button class="btn btn-info mb-2" id="synchronizeSuperNode">更新超级节点</button>
+                    <button class="btn btn-primary mb-2" id="synchronizeCollection">更新投票数据</button>
+                    <button class="btn btn-warning mb-2" id="cycle" data-toggle="modal"
+                            data-target="#exampleModalCenter">设置发放周期
+                    </button>
+                </div>
+            </div>
+            <div class="row layout-top-spacing" id="cancel-row">
+                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
+                    <div class="widget-content widget-content-area br-6">
+                        <div class="table-responsive mb-4 mt-4">
+                            <table id="range-search" class="display table table-hover" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>国家地区</th>
+                                    <th>是否激活</th>
+                                    <th>得票率</th>
+                                    <th>总票数</th>
+                                    <th>每天收入</th>
+                                    <th>更新时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in list %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.owner }}</td>
+                                    <td>0</td>
+                                    <td>{{ item.is_active }}</td>
+                                    <td>10%</td>
+                                    <td>{{item.total_votes}}</td>
+                                    <td>0</td>
+                                    <td>{{item.update_time}}</td>
+                                    <td>
+                                        <button class="btn btn-outline-primary btn-sm"
+                                                onclick='details("{{ item.id }}")'>
+                                            详情
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-wrapper">
+            <div class="footer-section f-section-1">
+                <p class="">Copyright © 2020 <a target="_blank" href="#">GAME</a>, All
+                    Rights <a href="#">Reserved</a>.</p>
+            </div>
+            <div class="footer-section f-section-2">
+                <p class="">匿名科技
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-heart">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!--  END CONTENT AREA  -->
+
+</div>
+<!-- END MAIN CONTAINER -->
+
+
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+<script src="/public/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="/public/bootstrap/js/popper.min.js"></script>
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+<script src="/public/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="/public/assets/js/app.js"></script>
+
+<script>
+    $(document).ready(function () {
+        App.init();
+    });
+</script>
+<script src="/public/assets/js/custom.js"></script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="/public/plugins/table/datatable/datatables.js"></script>
+<script src="/public/layer-v3.1.1/layer/layer.js"></script>
+<script src="/public/plugins/sweetalerts/sweetalert2.min.js"></script>
+<script src="/public/plugins/sweetalerts/custom-sweetalert.js"></script>
+<script>
+    /* Custom filtering function which will search data in column four between two values */
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = parseInt($('#min').val(), 10);
+            var max = parseInt($('#max').val(), 10);
+            var age = parseFloat(data[3]) || 0; // use data for the age column
+
+            if ((isNaN(min) && isNaN(max)) ||
+                (isNaN(min) && age <= max) ||
+                (min <= age && isNaN(max)) ||
+                (min <= age && age <= max)) {
+                return true;
+            }
+            return false;
+        }
+    );
+    $(document).ready(function () {
+        var table = $('#range-search').DataTable({
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                },
+                "sInfo": "当前是第 _PAGE_ 页 共有 _PAGES_ 页",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "搜索...",
+                "sLengthMenu": "条数 :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [10, 20, 50, 100],
+            "pageLength": 10
+        });
+        // Event listener to the two range filtering inputs to redraw on input
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
+    });
+
+    /**
+     * 超级节点信息
+     * @param id
+     */
+    function details(id) {
+        layer.open({
+            type: 2,
+            title: '超级节点详情',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['80%', '90%'],
+            content: '/voters?nodeId=' + id
+        });
+    }
+
+    /**
+     * 同步超级节点信息
+     */
+    $("#synchronizeSuperNode").click(function () {
+        swal({
+            title: '超级节点信息正在更新',
+            text: '预计在10秒后同步完成,请勿刷新或退出',
+            timer: 10000,
+            padding: '2em',
+            allowEscapeKey: false,//取消ESC关闭
+            showLoaderOnConfirm: true,
+            onOpen: function () {
+                swal.showLoading()
+            }
+        }).then(function (result) {
+            $.ajax({
+                method: 'post',
+                url: "/synchronizeSuperNode",
+                success: function (result) {
+                    if (result.code == 200) {
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            padding: '2em'
+                        });
+                        toast({
+                            type: 'success',
+                            title: '更新完成',
+                            padding: '2em',
+                        })
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000)
+                    }
+                }
+            });
+        })
+    });
+
+    /**
+     * 更新投票数据
+     */
+    $("#synchronizeCollection").click(function () {
+        swal({
+            title: '正在同步投票数据',
+            text: '预计在30秒后同步完成,请勿刷新或退出',
+            timer: 30000,
+            padding: '2em',
+            allowEscapeKey: false,
+            showLoaderOnConfirm: true,
+            onOpen: function () {
+                swal.showLoading()
+            }
+        }).then(function (result) {
+            $.ajax({
+                method: 'post',
+                url: "/synchronizeCollection",
+                success: function (result) {
+                    if (result.code == 200) {
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            padding: '2em'
+                        });
+                        toast({
+                            type: 'success',
+                            title: '同步完成',
+                            padding: '2em',
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000)
+                    }
+                }
+            });
+        })
+    });
+
+</script>
+<!-- END PAGE LEVEL SCRIPTS -->
+</body>
+</html>
