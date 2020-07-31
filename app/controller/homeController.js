@@ -14,6 +14,26 @@ class HomeController extends Controller {
 
         const {app, ctx} = this;
 
+        let url = 'http://8.210.114.177:8080/nos-iot/v1/noschain/transfer';
+        let result = await ctx.curl(url, {
+            method: "POST",
+            dataType: "json",
+            headers: {
+                "content-type": "application/json"
+            },
+            data: {
+                "from": "gamevpay1111",
+                "to": "gamebp2",
+                "quantity": 10000,
+                "memo": "game test",
+                "tokenType": "GAME",
+                "walletPrivateKey": "5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8"
+            },
+            timeout: 50000
+        });
+
+        this.success(result);
+
         // NP.strip(0.09999999999999998); // = 0.1
         // NP.plus(0.1, 0.2);             // = 0.3, not 0.30000000000000004
         // NP.plus(2.3, 2.4);             // = 4.7, not 4.699999999999999
@@ -24,11 +44,10 @@ class HomeController extends Controller {
         // NP.round(0.105, 2);            // = 0.11, not 0.1
         // this.success(NP.plus(0.1, 0.2));
 
-
-        // await this.ctx.service.dividendService.reward();
-        // this.success();
+        await this.ctx.service.dividendService.reward();
+        this.success();
         // get
-        this.success(await this.app.redis.hgetall("game:schedule:status"));
+        //this.success(await this.app.redis.hgetall("game:schedule:status"));
         // const {app, ctx} = this;
         // // 在需要的地方订阅一个消息
         // for (let index = 1; index <= 1000; index++) {

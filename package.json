@@ -1,7 +1,7 @@
 {
-  "name": "tz-eos-gateway",
+  "name": "game",
   "version": "1.0.0",
-  "description": "主流币种网关",
+  "description": "game reward",
   "private": true,
   "egg": {
     "declarations": true

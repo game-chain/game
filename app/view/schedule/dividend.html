@@ -4,20 +4,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Dark DataTables</title>
+    <title>GAME-运行状态</title>
     <link rel="icon" type="image/x-icon" href="/public/assets/img/favicon.ico"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/public/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <!-- END GLOBAL MANDATORY STYLES -->
-
+    
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/datatables-dark.css">
-    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/dt-global_style-dark.css">
+    <link href="/public/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/dt-global_style.css">
     <!-- END PAGE LEVEL STYLES -->
 </head>
-<body class="sidebar-noneoverflow">
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
 
 <!--  BEGIN NAVBAR  -->
 <div class="header-container fixed-top">
@@ -194,23 +205,9 @@
 
 <!--  BEGIN MAIN CONTAINER  -->
 <div class="main-container" id="container">
-
-    <div class="overlay"></div>
-    <div class="cs-overlay"></div>
-    <div class="search-overlay"></div>
-
     <!--  BEGIN SIDEBAR  -->
     <div class="sidebar-wrapper sidebar-theme">
         <nav id="sidebar">
-            <!--            <div class="profile-info">-->
-            <!--                <figure class="user-cover-image"></figure>-->
-            <!--                <div class="user-info">-->
-            <!--                    <img src="assets/img/90x90.jpg" alt="avatar">-->
-            <!--                    <h6 class="">Sonia Shaw</h6>-->
-            <!--                    <p class="">Project Leader</p>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="shadow-bottom"></div>-->
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu active">
                     <a href="/" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
@@ -233,10 +230,12 @@
                     </a>
                     <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="dashboard"
                         data-parent="#accordionExample">
-                        <li class="active">
+                        <li>
                             <a href="/node"> 超级节点 </a>
                         </li>
-
+                        <li class="active">
+                            <a href="/dividend"> 奖励记录 </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu md-visible menu-heading">
@@ -255,69 +254,22 @@
 
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
-
-        <!-- 设置周期 -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="ftFormArray" class="col-lg-12 layout-spacing ">
-                        <div>
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 pt-5 pb-5 text-center">
-                                        <h4>发放周期设置</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="h-100">
-                                <form method="post" action="/cycle">
-                                    <div class="form-group mb-4">
-                                        <input type="text" class="form-control" id="country" placeholder="天数"
-                                               autocomplete="off">
-                                    </div>
-                                    <div class="modal-body">
-                                        <h4 class="modal-heading mb-4 mt-2">说明</h4>
-                                        <p class="modal-text">1.周期单位为天数;</p>
-                                        <p class="modal-text">2.周期设置后开始奖励时间为当前时间加上设置的天数;</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
-                                            取消
-                                        </button>
-                                        <button type="submit" class="btn btn-primary" id="cycle_submit">保存</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="layout-px-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-content widget-content-area text-right split-buttons">
-                    <button class="btn btn-info mb-2" id="update">手动更新</button>
-                    <button class="btn btn-success mb-2" id="cycle" data-toggle="modal"
-                            data-target="#exampleModalCenter">设置发放周期
-                    </button>
-                </div>
-            </div>
             <div class="row layout-top-spacing" id="cancel-row">
-                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
                     <div class="widget-content widget-content-area br-6">
                         <div class="table-responsive mb-4 mt-4">
-                            <table id="zero-config" class="table table-hover" style="width:100%">
+                            <table id="range-search" class="display table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>编号</th>
-                                    <th>名称</th>
-                                    <th>国家地区</th>
-                                    <th>是否激活</th>
-                                    <th>得票率</th>
-                                    <th>总票数</th>
-                                    <th>每天收入</th>
-                                    <th>更新时间</th>
+                                    <th>期数</th>
+                                    <th>用户名称</th>
+                                    <th>节点编号</th>
+                                    <th>节点信息</th>
+                                    <th>所占比例</th>
+                                    <th>获得奖励</th>
+                                    <th>是否发放</th>
+                                    <th>新增时间</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -325,26 +277,21 @@
                                 <tr>
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.owner }}</td>
-                                    <td>0</td>
-                                    <td>{{ item.is_active }}</td>
-                                    <td>{{item.total_votes}}</td>
-                                    <td>{{item.total_votes}}</td>
-                                    <td>{{item.total_votes}}</td>
-                                    <td>{{item.update_time}}</td>
+                                    <td>{{ item.node_bp_id }}</td>
+                                    <td>
+                                        <button class="btn btn-outline-primary btn-sm"
+                                                onclick='details("{{ item.node_bp_json }}")'>
+                                            详情
+                                        </button>
+                                    </td>
+                                    <td>{{item.vote_proportion}}</td>
+                                    <td>{{item.vote_reward}}</td>
+                                    <td>{{item.is_reward}}</td>
+                                    <td>{{item.create_time}}</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th>排名</th>
-                                    <th>名称</th>
-                                    <th>国家地区</th>
-                                    <th>是否激活</th>
-                                    <th>得票率</th>
-                                    <th>总票数</th>
-                                    <th>每天收入</th>
-                                    <th>更新时间</th>
-                                </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -354,7 +301,7 @@
         </div>
         <div class="footer-wrapper">
             <div class="footer-section f-section-1">
-                <p class="">Copyright © 2020 <a target="_blank" href="/">DesignReset</a>, All
+                <p class="">Copyright © 2020 <a target="_blank" href="#">GAME</a>, All
                     Rights <a href="#">Reserved</a>.</p>
             </div>
             <div class="footer-section f-section-2">
@@ -391,24 +338,46 @@
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="/public/plugins/table/datatable/datatables.js"></script>
+<script src="/public/layer-v3.1.1/layer/layer.js"></script>
+<script src="/public/plugins/sweetalerts/sweetalert2.min.js"></script>
+<script src="/public/plugins/sweetalerts/custom-sweetalert.js"></script>
 <script>
-    $('#zero-config').DataTable({
-        "oLanguage": {
-            "oPaginate": {
-                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+    /* Custom filtering function which will search data in column four between two values */
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = parseInt($('#min').val(), 10);
+            var max = parseInt($('#max').val(), 10);
+            var age = parseFloat(data[3]) || 0; // use data for the age column
+
+            if ((isNaN(min) && isNaN(max)) ||
+                (isNaN(min) && age <= max) ||
+                (min <= age && isNaN(max)) ||
+                (min <= age && age <= max)) {
+                return true;
+            }
+            return false;
+        }
+    );
+    $(document).ready(function () {
+        var table = $('#range-search').DataTable({
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                },
+                "sInfo": "当前是第 _PAGE_ 页 共有 _PAGES_ 页",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "搜索...",
+                "sLengthMenu": "条数 :  _MENU_",
             },
-            "sInfo": "当前是第 _PAGE_ 页 共有 _PAGES_ 页",
-            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-            "sSearchPlaceholder": "搜索...",
-            "sLengthMenu": "条数 :  _MENU_",
-        },
-        "stripeClasses": [],
-        "lengthMenu": [1, 20, 50, 100],
-        "pageLength": 1
-    });
-    $("#addBut").click(function () {
-        alert(1);
+            "stripeClasses": [],
+            "lengthMenu": [10, 20, 50, 100],
+            "pageLength": 10
+        });
+        // Event listener to the two range filtering inputs to redraw on input
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
     });
 </script>
 <!-- END PAGE LEVEL SCRIPTS -->

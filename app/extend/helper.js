@@ -5,7 +5,6 @@ const {JsSignatureProvider} = require('eosjs/dist/eosjs-jssig');
 const fetch = require('node-fetch');
 const {TextEncoder, TextDecoder} = require('text-encoding');
 const fecha = require('fecha');
-const RippleAPI = require('ripple-lib').RippleAPI;
 
 /**
  * egg 帮助类

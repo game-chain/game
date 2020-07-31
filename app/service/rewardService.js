@@ -15,11 +15,29 @@ class rewardService extends Service {
      * @returns {Promise<*>}
      */
     async transfer(data, done) {
-        console.log('队列消息编号:' + data.number);
-        //console.log('收到消息队列信息:' + data + '' + param);
+        const {app, ctx} = this;
+        ctx.logger.info('处理奖励编号:' + data.id);
+        ctx.service.dividendService.update(data.id, {
+            is_reward: 1
+        });
+        let result = await ctx.curl(url, {
+            method: "POST",
+            dataType: "json",
+            headers: {
+                "content-type": "application/json"
+            },
+            data: {
+                "from": "gamevpay1111",
+                "to": "gamebp2",
+                "quantity": 10000,
+                "memo": "game test",
+                "tokenType": "GAME",
+                "walletPrivateKey": "5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8"
+            },
+            timeout: 50000
+        });
         done();
     }
-    
 }
 
 module.exports = rewardService;

@@ -69,38 +69,41 @@ class dividendService extends Service {
         const periodsId = ctx.helper.createID();
 
         voters.rows.forEach(function (voterVal, voterIndex, voterKey) {
-            ctx.logger.info('结算用户：' + voterVal.owner);
 
             node.rows.forEach(function (nodeVal, index, nodeKey) {
 
                 if (voterVal.node_bp_id == nodeVal.id) {
 
                     //当前投票用户的占比
-                    let vote_proportion = NP.divide(nodeVal.total_votes, voterVal.staked);
+                    // let vote_proportion = NP.divide(nodeVal.total_votes, voterVal.staked);
                     //超级节点只拿出80%来奖励给投票用户
-                    let totalReward = NP.times(vote_proportion, 0.8).toFixed(10);
+                    // let totalReward = NP.times(vote_proportion, 0.8).toFixed(10);
+                    // //根据所投票占比计算奖励
+                    // let vote_reward = NP.times(totalReward, nodeVal.location).toFixed(10);
+
+                    let vote_proportion = 0.2;
                     //根据所投票占比计算奖励
-                    let vote_reward = NP.times(totalReward, nodeVal.location).toFixed(10);
+                    let vote_reward = 1000;
+                    //if (vote_reward > 0) {
 
-                    if (vote_reward > 0) {
+                    ctx.logger.info(ctx.helper.getDate() + '------结算用户：' + voterVal.owner + '已完成...');
+                    let dividend = {
+                        id: ctx.helper.createID(),
+                        periods_id: periodsId,
+                        owner: voterVal.owner,
+                        node_bp_id: nodeVal.id,
+                        node_bp_json: JSON.stringify(nodeVal),
+                        vote_proportion: vote_proportion,
+                        vote_reward: vote_reward,
+                        is_reward: false,
+                        create_time: ctx.helper.getDate()
+                    };
 
-                        let dividend = {
-                            id: ctx.helper.createID(),
-                            periods_id: periodsId,
-                            owner: voterVal.owner,
-                            node_bp_id: nodeVal.id,
-                            node_bp_json: JSON.stringify(nodeVal),
-                            vote_proportion: vote_proportion,
-                            vote_reward: vote_reward,
-                            is_reward: false,
-                            create_time: ctx.helper.getDate()
-                        };
+                    ctx.service.dividendService.create(dividend);
 
-                        ctx.service.dividendService.create(dividend);
+                    app.kue.create('transfer', {id: dividend.id}).ttl(10).save();
 
-                        app.kue.create('transfer', {id: dividend.id}).ttl(10).save();
-
-                    }
+                    //}
                 }
                 return;
             });
@@ -114,6 +117,24 @@ class dividendService extends Service {
      */
     async create(dividend) {
         return await this.ctx.model.Dividend.create(dividend);
+    }
+
+    /**
+     * 更新记录
+     * @param id
+     * @param updates
+     * @returns {Promise<boolean|*>}
+     */
+    async update(id, updates) {
+        const dividend = await this.ctx.model.Dividend.findOne({
+            where: {
+                id: id
+            }
+        })
+        if (!dividend) {
+            return false;
+        }
+        return await dividend.update(updates);
     }
 }
 
