@@ -44,8 +44,8 @@ module.exports = appInfo => {
      * @type {{privateKey: string, random: string, scope: string, rpcUrl: string, account: string, table: string}}
      */
     config.eos = {
-        account: 'sbihgutest11',
-        privateKey: '5J6R3MsgyTqid2TYudmpX33MUCwLc4ddH421HYkPK3NjZMTmpM6',
+        account: 'gamevpay1111',
+        privateKey: '5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8',
         rpcUrl: 'http://8.210.114.177:8888',
         table: 'voters',
         scope: 'eosio',
@@ -61,6 +61,7 @@ module.exports = appInfo => {
     config.router = [
         '/login',
         '/test',
+        '/owner/amount',//用户收益总额
     ];
 
     /**

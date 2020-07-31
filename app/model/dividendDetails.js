@@ -11,7 +11,7 @@ module.exports = app => {
 
     const {STRING, TEXT, BIGINT} = app.Sequelize;
 
-    const dividendDetails = app.model.define('game_dividend', {
+    const dividendDetails = app.model.define('game_dividend_details', {
         id: {
             type: BIGINT(30),
             primaryKey: true, //主键
@@ -20,6 +20,6 @@ module.exports = app => {
         transaction_id: STRING(300),
         transaction_json: TEXT,
     });
-
+    
     return dividendDetails;
 };

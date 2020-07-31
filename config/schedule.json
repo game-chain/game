@@ -1,7 +1,7 @@
 {
   "reward": {
     "base": {
-      "cron": "*/60 * * * * *",
+      "cron": "* * /1 * * * *",
       "fun": "./sc/reward.js",
       "switch": true
     },

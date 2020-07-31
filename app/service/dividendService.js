@@ -52,7 +52,7 @@ class dividendService extends Service {
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }
-
+    
     /**
      * 结算投票奖励
      * @returns {Promise<void>}
@@ -135,6 +135,16 @@ class dividendService extends Service {
             return false;
         }
         return await dividend.update(updates);
+    }
+
+    /**
+     * 根据主键获取
+     * @param id
+     * @returns {Promise<*>}
+     */
+    async find(id) {
+        const voters = await this.ctx.model.Dividend.findByPk(id);
+        return voters;
     }
 }
 

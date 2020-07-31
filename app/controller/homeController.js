@@ -14,25 +14,25 @@ class HomeController extends Controller {
 
         const {app, ctx} = this;
 
-        let url = 'http://8.210.114.177:8080/nos-iot/v1/noschain/transfer';
-        let result = await ctx.curl(url, {
-            method: "POST",
-            dataType: "json",
-            headers: {
-                "content-type": "application/json"
-            },
-            data: {
-                "from": "gamevpay1111",
-                "to": "gamebp2",
-                "quantity": 10000,
-                "memo": "game test",
-                "tokenType": "GAME",
-                "walletPrivateKey": "5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8"
-            },
-            timeout: 50000
-        });
-
-        this.success(result);
+        // let url = 'http://8.210.114.177:8080/nos-iot/v1/noschain/transfer';
+        // let result = await ctx.curl(url, {
+        //     method: "POST",
+        //     dataType: "json",
+        //     headers: {
+        //         "content-type": "application/json"
+        //     },
+        //     data: {
+        //         "from": "gamevpay1111",
+        //         "to": "gamebp2",
+        //         "quantity": 10000,
+        //         "memo": "game test",
+        //         "tokenType": "GAME",
+        //         "walletPrivateKey": "5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8"
+        //     },
+        //     timeout: 50000
+        // });
+        //
+        // this.success(result);
 
         // NP.strip(0.09999999999999998); // = 0.1
         // NP.plus(0.1, 0.2);             // = 0.3, not 0.30000000000000004

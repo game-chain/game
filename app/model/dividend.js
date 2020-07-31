@@ -23,14 +23,21 @@ module.exports = app => {
         node_bp_json: TEXT,
         vote_proportion: DECIMAL(12, 10),
         vote_reward: DECIMAL(12, 10),
+        transaction_id: STRING(300),
         is_reward: BOOLEAN,
         create_time: {
             type: DATE,
             get() {
                 return moment(this.getDataValue('create_time')).format('YYYY-MM-DD HH:mm:ss');
             }
+        },
+        transaction_time: {
+            type: DATE,
+            get() {
+                return moment(this.getDataValue('transaction_time')).format('YYYY-MM-DD HH:mm:ss');
+            }
         }
     });
-    
+
     return dividend;
 };
