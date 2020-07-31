@@ -4,15 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Range Search DataTables</title>
+    <title>GAME-奖励记录</title>
     <link rel="icon" type="image/x-icon" href="/public/assets/img/favicon.ico"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/public/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="/public/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css"/>
+    <link href="/public/assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css"/>
+
     <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/datatables.css">
     <link rel="stylesheet" type="text/css" href="/public/plugins/table/datatable/dt-global_style.css">
     <!-- END PAGE LEVEL STYLES -->
@@ -230,6 +233,9 @@
                         <li>
                             <a href="/node"> 超级节点 </a>
                         </li>
+                        <li class="active">
+                            <a href="/dividend"> 奖励记录 </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu md-visible menu-heading">
@@ -250,42 +256,20 @@
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
             <div class="row layout-top-spacing" id="cancel-row">
-
                 <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
                     <div class="widget-content widget-content-area br-6">
-                        <div class="row text-center">
-                            <div class="col-lg-12">
-                                <h3>超级节点详情</h3>
-                            </div>
-                        </div>
                         <div class="table-responsive mb-4 mt-4">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td>节点名称:</td>
-                                    <td><input type="text" class="form-control" disabled name="min" value="2132"></td>
-                                    <td>得票率:</td>
-                                    <td><input type="text" class="form-control" disabled name="min"></td>
-                                    <td>奖励:</td>
-                                    <td><input type="text" class="form-control" disabled name="max"></td>
-                                </tr>
-                                <tr>
-                                    <td>地区:</td>
-                                    <td><input type="text" class="form-control" disabled name="max"></td>
-                                    <td>未支付区块数:</td>
-                                    <td><input type="text" class="form-control" disabled name="max"></td>
-                                </tr>
-                                </tbody>
-                            </table>
                             <table id="range-search" class="display table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>序号</th>
+                                    <th>期数</th>
                                     <th>用户名称</th>
-                                    <th>投票数</th>
+                                    <th>节点编号</th>
+                                    <th>节点信息</th>
                                     <th>所占比例</th>
-                                    <th>奖励</th>
-                                    <th>奖励时间</th>
+                                    <th>获得奖励</th>
+                                    <th>是否发放</th>
+                                    <th>新增时间</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -293,9 +277,16 @@
                                 <tr>
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.owner }}</td>
-                                    <td>{{ item.staked }}</td>
-                                    <td>{{item.last_vote_weight}}</td>
-                                    <td>{{item.last_vote_weight}}</td>
+                                    <td>{{ item.node_bp_id }}</td>
+                                    <td>
+                                        <button class="btn btn-outline-primary btn-sm"
+                                                onclick='details("{{ item.node_bp_json }}")'>
+                                            详情
+                                        </button>
+                                    </td>
+                                    <td>{{item.vote_proportion}}</td>
+                                    <td>{{item.vote_reward}}</td>
+                                    <td>{{item.is_reward}}</td>
                                     <td>{{item.create_time}}</td>
                                 </tr>
                                 {% endfor %}
@@ -306,10 +297,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
         <div class="footer-wrapper">
             <div class="footer-section f-section-1">
                 <p class="">Copyright © 2020 <a target="_blank" href="#">GAME</a>, All
@@ -349,6 +338,9 @@
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="/public/plugins/table/datatable/datatables.js"></script>
+<script src="/public/layer-v3.1.1/layer/layer.js"></script>
+<script src="/public/plugins/sweetalerts/sweetalert2.min.js"></script>
+<script src="/public/plugins/sweetalerts/custom-sweetalert.js"></script>
 <script>
     /* Custom filtering function which will search data in column four between two values */
     $.fn.dataTable.ext.search.push(
@@ -368,9 +360,6 @@
     );
     $(document).ready(function () {
         var table = $('#range-search').DataTable({
-            language: {
-                "url": "/public/plugins/table/datatable/datatables_language.json"
-            },
             "oLanguage": {
                 "oPaginate": {
                     "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
@@ -382,8 +371,8 @@
                 "sLengthMenu": "条数 :  _MENU_",
             },
             "stripeClasses": [],
-            "lengthMenu": [1, 20, 50, 100],
-            "pageLength": 1
+            "lengthMenu": [10, 20, 50, 100],
+            "pageLength": 10
         });
         // Event listener to the two range filtering inputs to redraw on input
         $('#min, #max').keyup(function () {

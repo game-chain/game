@@ -39,6 +39,17 @@ class voterService extends Service {
     }
 
     /**
+     * 所有投票用户
+     * @param where
+     * @param offset
+     * @param limit
+     * @returns {Promise<*>}
+     */
+    async getAll() {
+        return this.ctx.model.Voters.findAndCountAll();
+    }
+
+    /**
      * 根据主键获取
      * @param id
      * @returns {Promise<*>}

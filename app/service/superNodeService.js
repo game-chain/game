@@ -30,12 +30,20 @@ class superNodeService extends Service {
      * @returns {Promise<*>}
      */
     async list(where, {offset = 0, limit = 10}) {
-        return this.ctx.model.SuperNode.findAndCountAll({
+        return await this.ctx.model.SuperNode.findAndCountAll({
             where: where,
             offset,
             limit,
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
+    }
+
+    /**
+     * 获取所有节点
+     * @returns {Promise<*>}
+     */
+    async getAll() {
+        return await this.ctx.model.SuperNode.findAndCountAll();
     }
 
     /**

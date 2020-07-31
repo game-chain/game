@@ -1,16 +1,4 @@
-# tz-eos-gateway node实现的主流币种网关
-
-### 支持主流币种
-
-- EOS（转账、余额查询、购买内存、执行合约、查询表信息等）.
-- XRP (转账、账号余额变动监控等)
-- USDT（OMNI ERTC20等）
-- TRX
-- ETH
-- BTC
-- ETH
-- 等等
-
+# game 投票奖励模块
 
 ## QuickStart
 

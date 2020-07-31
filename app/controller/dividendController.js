@@ -41,6 +41,17 @@ class dividendController extends Controller {
             this.fail(err.message, err.errors, ctx.PARAM_ERROR_CODE);
         }
     }
+
+    /**
+     * 奖励记录
+     * @returns {Promise<void>}
+     */
+    async dividend() {
+        let result = await this.ctx.service.dividendService.list([], 1, 10);
+        await this.ctx.render('dividend/dividend.html', {
+            list: result.rows
+        });
+    }
 }
 
 module.exports = dividendController;

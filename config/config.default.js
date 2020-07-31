@@ -61,10 +61,8 @@ module.exports = appInfo => {
     config.router = [
         '/login',
         '/test',
-        // '/owner/amount',
-        // '/owner/details'
     ];
-    
+
     /**
      * jwt配置信息
      *

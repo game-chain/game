@@ -74,7 +74,13 @@ class EosController extends Controller {
     async cycle() {
         const {ctx} = this;
         await ctx.service.configService.update('reward_time', {v: ctx.request.body.cycle});
-        ctx.redirect('/node');
+        var fs = require('fs');
+        const data = await this.ctx.service.scheduleService.readJson();
+        fs.writeFile('config/schedule.json', JSON.stringify(data), 'utf8', function (err) {
+            if (!err) {
+                ctx.redirect('/node');
+            }
+        })
     }
 
     /**

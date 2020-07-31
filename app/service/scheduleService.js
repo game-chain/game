@@ -17,7 +17,7 @@ class scheduleService extends Service {
     async list() {
         return await this.ctx.model.Schedule.findAll();
     }
-
+    
     /**
      * 组装成json
      * @returns {Promise<void>}
@@ -26,7 +26,7 @@ class scheduleService extends Service {
         let list = await this.list();
         let data = [];
         list.forEach(function (val, index, key) {
-            let temp = null;
+            let temp = {};
             let keys = val.schedule_name;
             temp[keys] = {
                 base: {

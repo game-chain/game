@@ -18,14 +18,16 @@ module.exports = app => {
     router.get('/', adminAuth, controller.homeController.index);
     router.get('/node', adminAuth, controller.eosController.node);
     router.get('/voters', adminAuth, controller.eosController.voters);
+    router.get('/dividend', adminAuth, controller.dividendController.dividend);
     router.get('/outLogin', adminAuth, controller.userController.outLogin);
-    
+
     //同步投票信息
     router.post('/synchronizeCollection', adminAuth, controller.eosController.synchronizeCollection);
     //同步超级节点信息
     router.post('/synchronizeSuperNode', adminAuth, controller.eosController.synchronizeSuperNode);
     // 修改周期
     router.post('/cycle', adminAuth, controller.eosController.cycle);
+
 
     //用户奖励总额
     router.post('/owner/amount', apiAuth, controller.dividendController.getAmount);

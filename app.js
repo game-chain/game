@@ -19,16 +19,6 @@ class App {
         // 此时 config 文件已经被读取并合并，但是还并未生效
         // 这是应用层修改配置的最后时机
         // 注意：此函数只支持同步调用
-
-        // var fs = require('fs');
-        // const data = await this.ctx.service.scheduleService.readJson();
-        // fs.writeFile('config/schedule.json', JSON.stringify(data), 'utf8', function (err) {
-        //     if (err) {
-        //         console.log("定时任务文件更新错误...");
-        //     } else {
-        //         console.log("定时任务文件更新完成...");
-        //     }
-        // })
         this.app.logger.warn("配置文件正在加载...");
     }
 
@@ -76,10 +66,6 @@ class App {
      */
     async serverDidReady() {
         const {app} = this;
-        // app.kue.process('transfer', (job, done) => {
-        //     // 这里可以调用service里面的方法来消费这些信息
-        //
-        // });
         app.kue.process('transfer', function (job, done) {
             const ctx = app.createAnonymousContext();
             ctx.service.rewardService.transfer(job.data, done);

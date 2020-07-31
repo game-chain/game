@@ -1,22 +1,22 @@
 {
-	"reward":{
-		"base":{
-			"cron":"*/5 * * * * *",
-			"fun":"./sc/reward.js",
-			"switch":true
+	"reward": {
+		"base": {
+			"cron":"*/60 * * * * *",
+			"fun": "./sc/reward.js",
+			"switch": true
 		},
-		"cfg":{
-			"rUrl":"http://reward.com"
+		"cfg": {
+			"rUrl": "http://reward.com"
 		}
 	},
-	"test":{
-		"base":{
+	"test": {
+		"base": {
 			"cron":"*/5 * * * * *",
-			"fun":"./sc/test.js",
-			"switch":true
+			"fun": "./sc/test.js",
+			"switch": true
 		},
-		"cfg":{
-			"rUrl":"http://test.com"
+		"cfg": {
+			"rUrl": "http://test.com"
 		}
 	}
 }

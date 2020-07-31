@@ -23,6 +23,7 @@ module.exports = app => {
         node_bp_json: TEXT,
         vote_proportion: DECIMAL(12, 10),
         vote_reward: DECIMAL(12, 10),
+        is_reward: BOOLEAN,
         create_time: {
             type: DATE,
             get() {
