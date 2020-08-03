@@ -8,7 +8,6 @@ module.exports = (options, app) => {
             code: ctx.TOKEN,
             message: "请求错误",
         };
-
         try {
 
             let request = ctx.request;

@@ -29,18 +29,16 @@ module.exports = app => {
     // 修改周期
     router.post('/cycle', adminAuth, controller.eosController.cycle);
 
-
+    //--------------------------------------------------api
     //用户奖励总额
-    router.post('/owner/amount', apiAuth, controller.dividendController.getAmount);
-    router.post('/owner/details', apiAuth, controller.dividendController.getDetails);
-
+    router.post('/owner/amount', controller.dividendController.getAmount);
+    router.post('/owner/details', controller.dividendController.getDetails);
     //用户提交投票
-    router.post('/vote/submit', apiAuth, controller.voteRecordingController.submitVote);
+    router.post('/vote/submit', controller.voteRecordingController.submitVote);
     //获取提交投票纪录
-    router.post('/vote/details', apiAuth, controller.voteRecordingController.getDetails);
+    router.post('/vote/details', controller.voteRecordingController.getDetails);
 
-
-    //弃用
+    //--------------------------------------------------弃用
     router.get('/test', controller.homeController.test);
     //EOS
     router.post('/eos/v1/info', controller.eosController.info);
