@@ -105,18 +105,8 @@ module.exports = {
      * @returns {string}
      */
     formatToDayTime(date = new Date()) {
-        return fecha.format(date, 'YYYY-MM-DD HH:mm:ss');
-    },
-
-    /**
-     * xrp连接到服务器
-     * @returns {Promise<RippleAPI>}
-     * @constructor
-     */
-    XrpApi: async function () {
-        return new RippleAPI({
-            server: 'wss://s.altnet.rippletest.net:51233' // test rippled server
-        });
+        const moment = require('moment');
+        return moment.unix(date).format('YYYY-MM-DD HH:mm:ss');
     },
 
     /**
