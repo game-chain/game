@@ -1,18 +1,9 @@
 <div class="sidebar-wrapper sidebar-theme">
-
     <nav id="sidebar">
-        <div class="profile-info">
-            <!--                <figure class="user-cover-image"></figure>-->
-            <!--                <div class="user-info">-->
-            <!--                    <img src="assets/img/90x90.jpg" alt="avatar">-->
-            <!--                    <h6 class="">Sonia Shaw</h6>-->
-            <!--                    <p class="">Project Leader</p>-->
-            <!--                </div>-->
-        </div>
-        <div class="shadow-bottom"></div>
         <ul class="list-unstyled menu-categories" id="accordionExample">
-            <li class="menu active">
-                <a href="/" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+
+            <li class="menu">
+                <a href="#forms" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -23,6 +14,32 @@
                         <span>驾驶舱</span>
                     </div>
                     <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="forms" data-parent="#accordionExample">
+                    <li class="active">
+                        <a href="/node"> 超级节点 </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu">
+                <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="feather feather-box">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        <span>记录管理</span>
+                    </div>
+                    <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                              stroke-linejoin="round" class="feather feather-chevron-right">
@@ -30,10 +47,12 @@
                         </svg>
                     </div>
                 </a>
-                <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="dashboard"
-                    data-parent="#accordionExample">
-                    <li class="active">
-                        <a href="/node"> 超级节点 </a>
+                <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
+                    <li>
+                        <a href="/dividend"> 奖励记录 </a>
+                    </li>
+                    <li>
+                        <a href="/vote"> 投票记录 </a>
                     </li>
                 </ul>
             </li>

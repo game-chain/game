@@ -20,6 +20,7 @@ module.exports = app => {
     router.get('/voters', adminAuth, controller.eosController.voters);
     router.get('/dividend', adminAuth, controller.dividendController.dividend);
     router.get('/outLogin', adminAuth, controller.userController.outLogin);
+    router.get('/vote', apiAuth, controller.voteRecordingController.vote);
 
     //同步投票信息
     router.post('/synchronizeCollection', adminAuth, controller.eosController.synchronizeCollection);
@@ -32,6 +33,11 @@ module.exports = app => {
     //用户奖励总额
     router.post('/owner/amount', apiAuth, controller.dividendController.getAmount);
     router.post('/owner/details', apiAuth, controller.dividendController.getDetails);
+
+    //用户提交投票
+    router.post('/vote', apiAuth, controller.voteRecordingController.submitVote);
+    //获取提交投票纪录
+    router.post('/vote/details', apiAuth, controller.voteRecordingController.getDetails);
 
 
     //弃用

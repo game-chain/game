@@ -62,6 +62,8 @@ module.exports = appInfo => {
         '/login',
         '/test',
         '/owner/amount',//用户收益总额
+        '/vote', //提交投票
+        '/vote/details',//投票记录
     ];
 
     /**

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>GAME-奖励记录</title>
+    <title>GAME-投票记录</title>
     <link rel="icon" type="image/x-icon" href="/public/assets/img/favicon.ico"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
@@ -52,7 +52,8 @@
                             <span>驾驶舱</span>
                         </div>
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
                                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                  class="feather feather-chevron-right">
                                 <polyline points="9 18 15 12 9 6"></polyline>
@@ -86,10 +87,10 @@
                         </div>
                     </a>
                     <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
-                        <li  class="active">
+                        <li>
                             <a href="/dividend"> 奖励记录 </a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="/vote"> 投票记录 </a>
                         </li>
                     </ul>
@@ -118,15 +119,11 @@
                             <table id="range-search" class="display table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>期数</th>
+                                    <th>编号</th>
                                     <th>用户名称</th>
-                                    <th>节点编号</th>
-                                    <th>节点信息</th>
-                                    <th>所占比例</th>
-                                    <th>获得奖励</th>
-                                    <th>是否发放</th>
-                                    <th>交易时间</th>
-                                    <th>新增时间</th>
+                                    <th>投票节点</th>
+                                    <th>票数</th>
+                                    <th>投票时间</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -134,19 +131,8 @@
                                 <tr>
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.owner }}</td>
-                                    <td>{{ item.node_bp_id }}</td>
-                                    <td>
-                                        <button class="btn btn-outline-primary btn-sm"
-                                                onclick='details("{{ item.node_bp_json }}")'>
-                                            详情
-                                        </button>
-                                    </td>
-                                    <td>{{item.vote_proportion}}</td>
-                                    <td>{{item.vote_reward}}</td>
-                                    <td>
-                                        {{ "是" if item.is_reward == true else "否" }}
-                                    </td>
-                                    <td>{{item.transaction_time}}</td>
+                                    <td>{{ item.bp_name }}</td>
+                                    <td>{{ item.ticket }}</td>
                                     <td>{{item.create_time}}</td>
                                 </tr>
                                 {% endfor %}
