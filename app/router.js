@@ -35,7 +35,7 @@ module.exports = app => {
     router.post('/owner/details', apiAuth, controller.dividendController.getDetails);
 
     //用户提交投票
-    router.post('/vote', apiAuth, controller.voteRecordingController.submitVote);
+    router.post('/vote/submit', apiAuth, controller.voteRecordingController.submitVote);
     //获取提交投票纪录
     router.post('/vote/details', apiAuth, controller.voteRecordingController.getDetails);
 
