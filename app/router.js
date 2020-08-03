@@ -20,8 +20,12 @@ module.exports = app => {
     router.get('/voters', adminAuth, controller.eosController.voters);
     router.get('/dividend', adminAuth, controller.dividendController.dividend);
     router.get('/outLogin', adminAuth, controller.userController.outLogin);
-    router.get('/vote', apiAuth, controller.voteRecordingController.vote);
+    router.get('/vote', adminAuth, controller.voteRecordingController.vote);
 
+    router.get('/schedule', adminAuth, controller.scheduleController.index);
+    router.post('/schedule/start', adminAuth, controller.scheduleController.start);
+    router.post('/schedule/stop', adminAuth, controller.scheduleController.stop);
+    
     //同步投票信息
     router.post('/synchronizeCollection', adminAuth, controller.eosController.synchronizeCollection);
     //同步超级节点信息
