@@ -25,7 +25,8 @@ module.exports = app => {
     router.get('/schedule', adminAuth, controller.scheduleController.index);
     router.post('/schedule/start', adminAuth, controller.scheduleController.start);
     router.post('/schedule/stop', adminAuth, controller.scheduleController.stop);
-    
+    router.post('/upload',controller.uploadController.upload);
+
     //同步投票信息
     router.post('/synchronizeCollection', adminAuth, controller.eosController.synchronizeCollection);
     //同步超级节点信息

@@ -139,8 +139,32 @@ module.exports = {
     getRewardTime: async function () {
         const {app} = this;
         return await app.redis.get('time');
-    }
+    },
 
+    /**
+     * 获取文件上传目录
+     * @param {*} filename
+     */
+    async getUploadFile(filename) {
+        const moment = require('moment');
+        const path = require('path');
+        var mkdirp = require('mkdirp');
+
+        // 1、获取当前日期     20180920
+        let day = moment.unix(new Date()).format('YYYYMMDD');
+        // 2、创建图片保存的路径
+        //this.config.uploadDir
+        let uploadPath = 'app/public/upload/';
+        let dir = path.join(uploadPath, day);
+        await mkdirp(dir); // 不存在就创建目录
+        let date = Date.now(); /* 毫秒数*/
+        // 返回图片保存的路径
+        let uploadDir = path.join(dir, date + path.extname(filename));
+        return {
+            uploadDir,
+            saveDir: this.ctx.origin + uploadDir.slice(3).replace(/\\/g, '/'),
+        };
+    }
 };
 
 

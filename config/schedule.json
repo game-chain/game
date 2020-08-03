@@ -1,1 +1,1 @@
-{"reward":{"base":{"cron":"0 20 3 * * ?","fun":"./sc/reward.js","switch":true},"cfg":"{\"rUrl\":\"http://test.com\"}"}}
+{"reward":{"base":{"cron":"0 45 3 * * ?","fun":"./sc/reward.js","switch":true},"cfg":"{\"rUrl\":\"http://test.com\"}"}}

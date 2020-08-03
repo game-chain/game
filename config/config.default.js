@@ -184,6 +184,10 @@ module.exports = appInfo => {
     }
 
 
+    exports.multipart = {
+        mode: 'file',
+    };
+
     /**
      * 应用中间件配置
      *
