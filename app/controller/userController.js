@@ -11,13 +11,19 @@ class userController extends Controller {
             password: {type: 'string'},
         });
         const param = ctx.request.body;
-        if (param.account == 'admin' && param.password == '123456') {
-            ctx.session.userInfo = {
-                userId: "1",
-                name: "测试"
-            };
+        ctx.session.userInfo = await ctx.service.adminUserService.find(param.account, param.password);
+        if (ctx.session.userInfo) {
             await ctx.redirect('/');
         }
+    }
+    
+    async password() {
+        const {ctx} = this;
+        ctx.validate({
+            password: {type: 'string'}
+        });
+        const param = ctx.request.body;
+        await ctx.service.adminUserService.update(ctx.session.userInfo.name, param.password);
     }
 
     async outLogin() {

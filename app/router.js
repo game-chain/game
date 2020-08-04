@@ -21,6 +21,7 @@ module.exports = app => {
     router.get('/dividend', adminAuth, controller.dividendController.dividend);
     router.get('/outLogin', adminAuth, controller.userController.outLogin);
     router.get('/vote', adminAuth, controller.voteRecordingController.vote);
+    router.get('/account/info', adminAuth, controller.accountController.info);
 
     router.get('/schedule', adminAuth, controller.scheduleController.index);
     router.post('/schedule/start', adminAuth, controller.scheduleController.start);
@@ -29,6 +30,7 @@ module.exports = app => {
 
     router.all('/get.dividend.data', adminAuth, controller.dividendController.data);
     router.all('/get.vote.data', adminAuth, controller.voteRecordingController.data);
+    router.post('/user.password', adminAuth, controller.userController.password);
 
     //同步投票信息
     router.post('/synchronizeCollection', adminAuth, controller.eosController.synchronizeCollection);
