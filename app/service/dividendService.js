@@ -46,13 +46,18 @@ class dividendService extends Service {
      * @param where
      * @returns {Promise<*>}
      */
-    async list(where, {offset = 0, limit = 10}) {
+    async list(where, page, limit) {
+        let offset = page <= 0 ? 1 : page;
+        limit = limit > 100 || limit <= 0 ? 10 : limit;
+        offset = (offset - 1) * limit;
         return await this.ctx.model.Dividend.findAndCountAll({
             where: where,
+            offset: offset,
+            limit: limit,
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }
-    
+
     /**
      * 结算投票奖励
      * @returns {Promise<void>}

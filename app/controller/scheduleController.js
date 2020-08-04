@@ -10,6 +10,10 @@ class scheduleController extends Controller {
      */
     async index() {
         let schedule = await this.app.redis.hgetall("game:schedule:status");
+        if (!schedule) {
+            await this.app.schex.startJob('reward');
+            schedule = await this.app.redis.hgetall("game:schedule:status");
+        }
         let jobs = await this.app.redis.hgetall("game:schedule:jobs");
         let data = JSON.parse(schedule.reward);
         let jobs_data = JSON.parse(jobs.reward);

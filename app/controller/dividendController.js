@@ -47,10 +47,13 @@ class dividendController extends Controller {
      * @returns {Promise<void>}
      */
     async dividend() {
-        let result = await this.ctx.service.dividendService.list([], 1, 10);
-        await this.ctx.render('dividend/dividend.html', {
-            list: result.rows
-        });
+        await this.ctx.render('dividend/dividend.html');
+    }
+    
+    async data() {
+        const query = this.ctx.query;
+        let result = await this.ctx.service.dividendService.list([], (query.start) / query.length, parseInt(query.length));
+        this.success(result);
     }
 }
 

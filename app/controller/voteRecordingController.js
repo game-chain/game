@@ -49,11 +49,15 @@ class voteRecordingController extends Controller {
      * @returns {Promise<void>}
      */
     async vote() {
-        let result = await this.ctx.service.voteRecordingService.list([], 1, 10);
-        await this.ctx.render('vote/vote.html', {
-            list: result.rows
-        });
+        await this.ctx.render('vote/vote.html');
     }
+
+    async data() {
+        const query = this.ctx.query;
+        let result = await this.ctx.service.voteRecordingService.list([], (query.start / query.length), parseInt(query.length));
+        this.success(result);
+    }
+
 }
 
 module.exports = voteRecordingController;

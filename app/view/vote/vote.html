@@ -127,15 +127,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in list %}
-                                <tr>
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.owner }}</td>
-                                    <td>{{ item.bp_name }}</td>
-                                    <td>{{ item.ticket }}</td>
-                                    <td>{{item.create_time}}</td>
-                                </tr>
-                                {% endfor %}
                                 </tbody>
                                 <tfoot>
                                 </tfoot>
@@ -192,6 +183,34 @@
     );
     $(document).ready(function () {
         var table = $('#range-search').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "retrieve": true,
+            "paging": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "bPaginate": true, //翻页功能
+            "bLengthChange": true, //改变每页显示数据数量
+            "bFilter": true, //过滤功能
+            "bSort": true, //排序功能
+            "bInfo": true,//页脚信息
+            "bAutoWidth": true,//自动宽度
+            'ajax': {
+                url: '/get.vote.data',
+                dataSrc: function (json) {
+                    json.recordsFiltered = json.data.count;  // 指定记录数
+                    json.recordsTotal = json.data.count; // 指定页数
+                    return json.data.rows; //指定返回数据列的位置，该数据列为数组形式
+                },
+            },
+            "columns": [
+                {"data": "id",},
+                {"data": "owner"},
+                {"data": "bp_name"},
+                {"data": "ticket"},
+                {"data": "create_time"}
+            ],
             "oLanguage": {
                 "oPaginate": {
                     "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
@@ -206,6 +225,7 @@
             "lengthMenu": [10, 20, 50, 100],
             "pageLength": 10
         });
+        
         // Event listener to the two range filtering inputs to redraw on input
         $('#min, #max').keyup(function () {
             table.draw();
