@@ -53,15 +53,14 @@
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                 class="feather feather-chevron-right">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-chevron-right">
                                 <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled" id="forms" data-parent="#accordionExample">
-                        <li>
+                    <ul class="submenu list-unstyled collapse show" id="forms" data-parent="#accordionExample" style="">
+                        <li class="active">
                             <a href="/node"> 超级节点 </a>
                         </li>
                     </ul>
@@ -94,6 +93,9 @@
                         <li>
                             <a href="/vote"> 投票记录 </a>
                         </li>
+                        <li>
+                            <a href="/transfer"> 交易记录 </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu md-visible menu-heading">
@@ -112,54 +114,11 @@
 
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
-        <!-- 设置周期 -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="ftFormArray" class="col-lg-12 layout-spacing ">
-                        <div>
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 pt-5 pb-5 text-center">
-                                        <h4>发放周期设置</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="h-100">
-                                <form method="post" action="/cycle">
-                                    <div class="form-group mb-4">
-                                        <input type="text" class="form-control" name="cycle" placeholder="天数"
-                                               value="{{rewardTime}}"
-                                               autocomplete="off">
-                                    </div>
-                                    <div class="modal-body">
-                                        <h4 class="modal-heading mb-4 mt-2">说明</h4>
-                                        <p class="modal-text">1.请设置为Cron格式，任务会按照设置的格式自动运行;</p>
-                                        <p class="modal-text">2.如需停止或启动任务请在-奖励记录-任务状态中停止即可;</p>
-                                        <p class="modal-text">3.设置时请严格按照要求填写，错误的格式可能会导致无法正常运行等情况。</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
-                                            取消
-                                        </button>
-                                        <button type="submit" class="btn btn-primary" id="cycle_submit">保存</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="layout-px-spacing">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area text-right split-buttons">
                     <button class="btn btn-info mb-2" id="synchronizeSuperNode">更新超级节点</button>
                     <button class="btn btn-primary mb-2" id="synchronizeCollection">更新投票数据</button>
-                    <button class="btn btn-warning mb-2" id="cycle" data-toggle="modal"
-                            data-target="#exampleModalCenter">设置发放周期
-                    </button>
                 </div>
             </div>
             <div class="row layout-top-spacing" id="cancel-row">
@@ -181,26 +140,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in list %}
-                                <tr>
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.owner }}</td>
-                                    <td>0</td>
-                                    <td>
-                                        {{ "是" if item.is_active == true else "否" }}
-                                    </td>
-                                    <td>10%</td>
-                                    <td>{{item.total_votes}}</td>
-                                    <td>0</td>
-                                    <td>{{item.update_time}}</td>
-                                    <td>
-                                        <button class="btn btn-outline-primary btn-sm"
-                                                onclick='details("{{ item.id }}")'>
-                                            投票信息
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
                                 </tbody>
                                 <tfoot>
                                 </tfoot>
@@ -257,6 +196,55 @@
     );
     $(document).ready(function () {
         var table = $('#range-search').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "retrieve": true,
+            "paging": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "bPaginate": true, //翻页功能
+            "bLengthChange": true, //改变每页显示数据数量
+            "bFilter": false, //过滤功能
+            "bSort": true, //排序功能
+            "bInfo": true,//页脚信息
+            "bAutoWidth": true,//自动宽度
+            'ajax': {
+                url: '/get.node.data',
+                dataSrc: function (json) {
+                    json.recordsFiltered = json.data.count;  // 指定记录数
+                    json.recordsTotal = json.data.count; // 指定页数
+                    return json.data.rows; //指定返回数据列的位置，该数据列为数组形式
+                },
+            },
+            "columns": [
+                {"data": "id",},
+                {"data": "owner"},
+                {
+                    "data": "location",
+                    "render": function (data, type, full, meta) {
+                        if (data != '' && data != 0) {
+                            return '<span class="badge badge-success">' + data + '</span>';
+                        } else {
+                            return '<span class="badge badge-warning">未知</span>';
+                        }
+                    }
+                },
+                {
+                    "data": "is_active",
+                    "render": function (data, type, full, meta) {
+                        if (data) {
+                            return '<span class="badge badge-success">已激活</span>';
+                        } else {
+                            return '<span class="badge badge-warning">未激活</span>';
+                        }
+                    }
+                },
+                {"data": "is_active"},
+                {"data": "total_votes"},
+                {"data": "total_votes"},
+                {"data": "update_time"}
+            ],
             "oLanguage": {
                 "oPaginate": {
                     "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
@@ -269,11 +257,17 @@
             },
             "stripeClasses": [],
             "lengthMenu": [10, 20, 50, 100],
-            "pageLength": 10
-        });
-        // Event listener to the two range filtering inputs to redraw on input
-        $('#min, #max').keyup(function () {
-            table.draw();
+            "pageLength": 10,
+            "columnDefs": [{
+                // 定义操作列,######以下是重点########
+                "targets": 8,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var id = '"' + row.id + '"';
+                    var html = "<button class='btn btn-outline-primary btn-sm' onclick='details(" + id + ")'>投票信息</button>"
+                    return html;
+                }
+            }],
         });
     });
 

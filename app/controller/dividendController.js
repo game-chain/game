@@ -41,15 +41,18 @@ class dividendController extends Controller {
             this.fail(err.message, err.errors, ctx.PARAM_ERROR_CODE);
         }
     }
-
+    
     /**
      * 奖励记录
      * @returns {Promise<void>}
      */
     async dividend() {
-        await this.ctx.render('dividend/dividend.html');
+        let rewardTime = await this.ctx.service.configService.getValueByKey('reward_time');
+        await this.ctx.render('dividend/dividend.html', {
+            rewardTime: rewardTime.v
+        });
     }
-    
+
     async data() {
         const query = this.ctx.query;
         let result = await this.ctx.service.dividendService.list([], (query.start) / query.length, parseInt(query.length));

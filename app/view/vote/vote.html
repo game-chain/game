@@ -86,12 +86,16 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
+                    <ul class="submenu list-unstyled collapse show" id="components" data-parent="#accordionExample"
+                        style="">
                         <li>
                             <a href="/dividend"> 奖励记录 </a>
                         </li>
                         <li class="active">
                             <a href="/vote"> 投票记录 </a>
+                        </li>
+                        <li>
+                            <a href="/transfer"> 交易记录 </a>
                         </li>
                     </ul>
                 </li>
@@ -192,7 +196,7 @@
             "autoWidth": true,
             "bPaginate": true, //翻页功能
             "bLengthChange": true, //改变每页显示数据数量
-            "bFilter": true, //过滤功能
+            "bFilter": false, //过滤功能
             "bSort": true, //排序功能
             "bInfo": true,//页脚信息
             "bAutoWidth": true,//自动宽度
@@ -225,7 +229,7 @@
             "lengthMenu": [10, 20, 50, 100],
             "pageLength": 10
         });
-        
+
         // Event listener to the two range filtering inputs to redraw on input
         $('#min, #max').keyup(function () {
             table.draw();

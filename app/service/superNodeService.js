@@ -29,7 +29,10 @@ class superNodeService extends Service {
      * @param where
      * @returns {Promise<*>}
      */
-    async list(where, {offset = 0, limit = 10}) {
+    async list(where, page, limit) {
+        let offset = page <= 0 ? 1 : page;
+        limit = limit > 100 || limit <= 0 ? 10 : limit;
+        offset = (offset - 1) * limit;
         return await this.ctx.model.SuperNode.findAndCountAll({
             where: where,
             offset,
@@ -37,7 +40,7 @@ class superNodeService extends Service {
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }
-
+    
     /**
      * 获取所有节点
      * @returns {Promise<*>}

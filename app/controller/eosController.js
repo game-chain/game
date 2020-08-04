@@ -14,12 +14,17 @@ class EosController extends Controller {
      * @returns {Promise<void>}
      */
     async node() {
-        let result = await this.ctx.service.superNodeService.list([], 1, 10);
-        let rewardTime = await this.ctx.service.configService.getValueByKey('reward_time');
-        await this.ctx.render('node/node.html', {
-            list: result.rows,
-            rewardTime: rewardTime.v
-        });
+        await this.ctx.render('node/node.html',);
+    }
+
+    /**
+     * 超级节点信息
+     * @returns {Promise<void>}
+     */
+    async nodeData() {
+        const query = this.ctx.query;
+        let result = await this.ctx.service.superNodeService.list([], (query.start / query.length), parseInt(query.length));
+        this.success(result);
     }
 
     /**
@@ -40,7 +45,7 @@ class EosController extends Controller {
                 val.vote_reward = totalReward * val.vote_proportion;
             });
         }
-
+        
         await this.ctx.render('node/voters.html', {
             list: result.rows,
             node: node,
