@@ -186,7 +186,7 @@
             return false;
         }
     );
-
+    
     $(document).ready(function () {
         var table = $('#range-search').DataTable({
             "processing": true,
@@ -230,11 +230,6 @@
             "stripeClasses": [],
             "lengthMenu": [10, 20, 50, 100],
             "pageLength": 10
-        });
-
-        // Event listener to the two range filtering inputs to redraw on input
-        $('#min, #max').keyup(function () {
-            table.draw();
         });
     });
 </script>

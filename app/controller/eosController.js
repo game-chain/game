@@ -34,7 +34,6 @@ class EosController extends Controller {
     async voters() {
         const {app, ctx} = this;
         const param = ctx.query;
-
         let node = await this.ctx.service.superNodeService.find(param.nodeId);
         let result = await this.ctx.service.voterService.list({'node_bp_id': param.nodeId}, 1, 10);
         if (result) {
@@ -45,7 +44,7 @@ class EosController extends Controller {
                 val.vote_reward = totalReward * val.vote_proportion;
             });
         }
-        
+
         await this.ctx.render('node/voters.html', {
             list: result.rows,
             node: node,
