@@ -24,7 +24,7 @@ class EosController extends Controller {
      */
     async nodeData() {
         const query = this.ctx.query;
-        let result = await this.ctx.service.superNodeService.list([],  parseInt(query.start), parseInt(query.length));
+        let result = await this.ctx.service.superNodeService.list([], parseInt(query.start), parseInt(query.length));
         let totalVotes = await this.ctx.service.superNodeService.getTotalVotes();
         console.log(totalVotes);
         result.rows.forEach(function (val, index, key) {
@@ -52,7 +52,7 @@ class EosController extends Controller {
                 val.vote_reward = NP.times(totalReward, val.vote_proportion).toFixed(10);
             });
         }
-
+        console.log(result.rows);
         await this.ctx.render('node/voters.html', {
             list: result.rows,
             node: node,
@@ -64,7 +64,6 @@ class EosController extends Controller {
      * @returns {Promise<void>}
      */
     async synchronizeCollection() {
-        const {app, ctx} = this;
         let result = await this.ctx.service.eosService.collection(true);
         this.success();
     }
