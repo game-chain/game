@@ -46,16 +46,18 @@ class EosController extends Controller {
         let result = await this.ctx.service.voterService.list({'node_bp_id': param.nodeId}, 1, 10);
         if (result) {
             result.rows.forEach(function (val, index, key) {
-                let totalReward = NP.times(val.staked, 0.8).toFixed(10);
-                val.vote_proportion = NP.divide(node.total_votes, val.staked).toFixed(10);
+                let totalReward = NP.times(val.staked, 0.8).toFixed(4);
+                val.vote_proportion = NP.divide(node.total_votes, val.staked).toFixed(4);
                 val.vote_proportion = val.vote_proportion > 100 ? 100 : val.vote_proportion;
-                val.vote_reward = NP.times(totalReward, val.vote_proportion).toFixed(10);
+                val.vote_reward = NP.times(totalReward, val.vote_proportion).toFixed(4);
+                node.setDataValue('total_votes', NP.plus(node.total_votes, 0).toFixed(4));
             });
         }
-        console.log(result.rows);
+        node.setDataValue("location", node.location == 0 ? '未知' : node.location);
         await this.ctx.render('node/voters.html', {
             list: result.rows,
             node: node,
+            total_ticket: param.total_ticket
         });
     }
 

@@ -257,7 +257,8 @@
                 "data": null,
                 "render": function (data, type, row) {
                     var id = '"' + row.id + '"';
-                    var html = "<button class='btn btn-outline-primary btn-sm' onclick='details(" + id + ")'>投票信息</button>"
+                    var total_ticket = '"' + row.total_ticket + '"';
+                    var html = "<button class='btn btn-outline-primary btn-sm' onclick='details(" + id + "," + total_ticket + ")'>投票信息</button>"
                     return html;
                 }
             }],
@@ -268,14 +269,14 @@
      * 超级节点信息
      * @param id
      */
-    function details(id) {
+    function details(id, total_ticket) {
         layer.open({
             type: 2,
             title: '  ',
             shadeClose: true,
             shade: 0.8,
             area: ['80%', '90%'],
-            content: '/voters?nodeId=' + id
+            content: '/voters?nodeId=' + id + "&total_ticket=" + total_ticket
         });
     }
 
