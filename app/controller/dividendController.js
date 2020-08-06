@@ -36,12 +36,12 @@ class dividendController extends Controller {
                 limit: {type: 'number', required: false},
             });
             const param = ctx.request.body;
-            this.success(await ctx.service.dividendService.getDetails(param.owner, param.pge, param.limit));
+            this.success(await ctx.service.dividendService.getDetails(param.owner, param.page, param.limit));
         } catch (err) {
             this.fail(err.message, err.errors, ctx.PARAM_ERROR_CODE);
         }
     }
-    
+
     /**
      * 奖励记录
      * @returns {Promise<void>}
@@ -55,7 +55,7 @@ class dividendController extends Controller {
 
     async data() {
         const query = this.ctx.query;
-        let result = await this.ctx.service.dividendService.list([], (query.start) / query.length, parseInt(query.length));
+        let result = await this.ctx.service.dividendService.list([], parseInt(query.start), parseInt(query.length));
         this.success(result);
     }
 }

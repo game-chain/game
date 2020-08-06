@@ -40,7 +40,7 @@ class superNodeService extends Service {
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }
-    
+
     /**
      * 获取所有节点
      * @returns {Promise<*>}
@@ -96,6 +96,14 @@ class superNodeService extends Service {
             this.ctx.throw(404, 'voters not found');
         }
         return this.ctx.model.SuperNode.destroy();
+    }
+
+    /**
+     * 获取总票数
+     * @returns {Promise<void>}
+     */
+    async getTotalVotes() {
+        return await this.ctx.model.SuperNode.sum('total_votes');
     }
 }
 

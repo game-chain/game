@@ -17,10 +17,10 @@ class voteRecordingService extends Service {
      * @param limit
      * @returns {Promise<void>}
      */
-    async getList(owner, page = 1, limit = 10) {
+    async getList(owner, page, limit) {
         const {app, ctx} = this;
         let offset = page <= 0 ? 1 : page;
-        limit = limit > 100 || limit <= 100 ? 20 : limit;
+        limit = limit > 100 || limit <= 0 ? 10 : limit;
         offset = (offset - 1) * limit;
         return await ctx.model.VoteRecording.findAndCountAll({
             where: {owner: owner},
@@ -52,13 +52,10 @@ class voteRecordingService extends Service {
      * @returns {Promise<*>}
      */
     async list(where, page, limit) {
-        let offset = page <= 0 ? 1 : page;
-        limit = limit > 100 || limit <= 0 ? 10 : limit;
-        offset = (offset - 1) * limit;
         return await this.ctx.model.VoteRecording.findAndCountAll({
             where: where,
-            offset: offset,
-            limit: limit,
+            offset: (page),
+            limit: ((limit) + (page)),
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }

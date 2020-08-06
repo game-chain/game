@@ -314,7 +314,7 @@ class eosService extends Service {
         const limit = 100;
         const result = await this.getTable(eos.code, eos.table, eos.scope, limit);
         result.rows.forEach(function (val, index, key) {
-            ctx.service.superNodeService.findByName(val['owner']).then(result => {
+            ctx.service.superNodeService.findByName(val['producers'][0]).then(result => {
                 const voters = {
                     id: ctx.helper.createID(),
                     owner: val['owner'],

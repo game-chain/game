@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('../core/baseController');
+const NP = require('number-precision');
 
 /**
  * @explain eos基础接口
@@ -24,6 +25,13 @@ class EosController extends Controller {
     async nodeData() {
         const query = this.ctx.query;
         let result = await this.ctx.service.superNodeService.list([], (query.start / query.length), parseInt(query.length));
+        let totalVotes = await this.ctx.service.superNodeService.getTotalVotes();
+        console.log(totalVotes);
+        result.rows.forEach(function (val, index, key) {
+            val.setDataValue('total_votes', NP.plus(val.total_votes, 0).toFixed(4));
+            val.setDataValue('total_ticket', NP.times(NP.divide(val.total_votes, totalVotes).toFixed(6), 100) + "%");
+            val.setDataValue('total_income', 10);
+        })
         this.success(result);
     }
 
@@ -38,10 +46,10 @@ class EosController extends Controller {
         let result = await this.ctx.service.voterService.list({'node_bp_id': param.nodeId}, 1, 10);
         if (result) {
             result.rows.forEach(function (val, index, key) {
-                let totalReward = val.staked * 0.8;
-                val.vote_proportion = node.total_votes / val.staked;
+                let totalReward = NP.times(val.staked, 0.8).toFixed(10);
+                val.vote_proportion = NP.divide(node.total_votes, val.staked).toFixed(10);
                 val.vote_proportion = val.vote_proportion > 100 ? 100 : val.vote_proportion;
-                val.vote_reward = totalReward * val.vote_proportion;
+                val.vote_reward = NP.times(totalReward, val.vote_proportion).toFixed(10);
             });
         }
 
@@ -60,7 +68,7 @@ class EosController extends Controller {
         let result = await this.ctx.service.eosService.collection(true);
         this.success();
     }
-
+    
     /**
      * 同步超级节点信息
      * @returns {Promise<void>}

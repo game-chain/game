@@ -38,7 +38,7 @@ class voteRecordingController extends Controller {
                 limit: {type: 'number', required: false},
             });
             const param = ctx.request.body;
-            this.success(await ctx.service.voteRecordingService.getList(param.owner, param.pge, param.limit));
+            this.success(await ctx.service.voteRecordingService.getList(param.owner, param.page, param.limit));
         } catch (err) {
             this.fail(err.message, err.errors, ctx.PARAM_ERROR_CODE);
         }
@@ -52,9 +52,10 @@ class voteRecordingController extends Controller {
         await this.ctx.render('vote/vote.html');
     }
 
+
     async data() {
         const query = this.ctx.query;
-        let result = await this.ctx.service.voteRecordingService.list([], (query.start / query.length), parseInt(query.length));
+        let result = await this.ctx.service.voteRecordingService.list([], parseInt(query.start), parseInt(query.length));
         this.success(result);
     }
 
