@@ -54,8 +54,8 @@ class voteRecordingService extends Service {
     async list(where, page, limit) {
         return await this.ctx.model.VoteRecording.findAndCountAll({
             where: where,
-            offset: (page),
-            limit: ((limit) + (page)),
+            offset: page,
+            limit: limit,
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }

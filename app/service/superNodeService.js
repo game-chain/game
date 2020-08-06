@@ -30,13 +30,10 @@ class superNodeService extends Service {
      * @returns {Promise<*>}
      */
     async list(where, page, limit) {
-        let offset = page <= 0 ? 1 : page;
-        limit = limit > 100 || limit <= 0 ? 10 : limit;
-        offset = (offset - 1) * limit;
         return await this.ctx.model.SuperNode.findAndCountAll({
             where: where,
-            offset,
-            limit,
+            offset: page,
+            limit: limit,
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }

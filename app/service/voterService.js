@@ -29,11 +29,11 @@ class voterService extends Service {
      * @param where
      * @returns {Promise<*>}
      */
-    async list(where, {offset = 0, limit = 10}) {
+    async list(where, page, limit) {
         return this.ctx.model.Voters.findAndCountAll({
             where: where,
-            offset,
-            limit,
+            offset: page,
+            limit: limit,
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }

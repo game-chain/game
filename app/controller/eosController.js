@@ -24,7 +24,7 @@ class EosController extends Controller {
      */
     async nodeData() {
         const query = this.ctx.query;
-        let result = await this.ctx.service.superNodeService.list([], (query.start / query.length), parseInt(query.length));
+        let result = await this.ctx.service.superNodeService.list([],  parseInt(query.start), parseInt(query.length));
         let totalVotes = await this.ctx.service.superNodeService.getTotalVotes();
         console.log(totalVotes);
         result.rows.forEach(function (val, index, key) {
@@ -68,7 +68,7 @@ class EosController extends Controller {
         let result = await this.ctx.service.eosService.collection(true);
         this.success();
     }
-    
+
     /**
      * 同步超级节点信息
      * @returns {Promise<void>}
