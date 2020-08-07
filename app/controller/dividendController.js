@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('../core/baseController');
+const NP = require('number-precision');
 
 class dividendController extends Controller {
 
@@ -56,6 +57,10 @@ class dividendController extends Controller {
     async data() {
         const query = this.ctx.query;
         let result = await this.ctx.service.dividendService.list([], parseInt(query.start), parseInt(query.length));
+        result.rows.forEach(function (val, index, key) {
+            val.setDataValue('vote_proportion', NP.times(NP.plus(val.vote_proportion, 0).toFixed(4), 100) + '%');
+            val.setDataValue('vote_reward', NP.plus(val.vote_reward, 0).toFixed(4));
+        });
         this.success(result);
     }
 }

@@ -114,6 +114,7 @@ module.exports = {
     handlers[type] = handler;
     events[type] = true;
   },
+
   // 创建延迟任务
   addDelayTask(type, id, body = {}, delay = 3600) {
     const key = `${delayEventKeyPrefix}${type}_${id}`;
@@ -127,6 +128,7 @@ module.exports = {
       tasks[taskKey] = body;
     });
   },
+
   // 订阅和处理延迟任务
   initDelayTask() {
     // 订阅

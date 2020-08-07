@@ -1,9 +1,10 @@
 'use strict';
 
 const Controller = require('../core/baseController');
+const NP = require('number-precision');
 
 class voteRecordingController extends Controller {
-
+    
     /**
      * 提交投票数据
      * @returns {Promise<void>}
@@ -56,6 +57,9 @@ class voteRecordingController extends Controller {
     async data() {
         const query = this.ctx.query;
         let result = await this.ctx.service.voteRecordingService.list([], parseInt(query.start), parseInt(query.length));
+        result.rows.forEach(function (val, index, key) {
+            val.setDataValue('ticket', NP.plus(val.ticket, 0).toFixed(4));
+        });
         this.success(result);
     }
 
