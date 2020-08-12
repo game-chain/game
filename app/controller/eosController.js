@@ -26,11 +26,9 @@ class EosController extends Controller {
         const query = this.ctx.query;
         let result = await this.ctx.service.superNodeService.list([], parseInt(query.start), parseInt(query.length));
         let totalVotes = await this.ctx.service.superNodeService.getTotalVotes();
-        console.log(totalVotes);
         result.rows.forEach(function (val, index, key) {
             val.setDataValue('total_votes', NP.plus(val.total_votes, 0).toFixed(4));
             val.setDataValue('total_ticket', NP.times(NP.divide(val.total_votes, totalVotes).toFixed(6), 100) + "%");
-            val.setDataValue('total_income', 10);
         })
         this.success(result);
     }

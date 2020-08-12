@@ -89,10 +89,10 @@ class superNodeService extends Service {
      */
     async del(id) {
         const voters = await this.ctx.model.SuperNode.findByPk(id);
-        if (!voters) {
-            this.ctx.throw(404, 'voters not found');
+        if (voters) {
+            return this.ctx.model.SuperNode.destroy();
         }
-        return this.ctx.model.SuperNode.destroy();
+        return false;
     }
 
     /**

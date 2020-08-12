@@ -302,6 +302,7 @@ class eosService extends Service {
         });
     }
 
+
     /**
      * 采集链上投票数据
      * @param account
@@ -314,32 +315,35 @@ class eosService extends Service {
         const eos = app.config.eos;
         const limit = 100;
         const result = await this.getTable(eos.code, eos.table, eos.scope, limit);
+        console.log(result);
         result.rows.forEach(function (val, index, key) {
-            ctx.service.superNodeService.findByName(val['producers'][0]).then(result => {
-                const voters = {
-                    id: ctx.helper.createID(),
-                    owner: val['owner'],
-                    node_bp_id: result.id,
-                    proxy: val['proxy'],
-                    producers: JSON.stringify(val['producers']),
-                    staked: NP.divide(val['staked'], 10000),
-                    last_vote_weight: val['last_vote_weight'],
-                    proxied_vote_weight: val['proxied_vote_weight'],
-                    is_proxy: val['is_proxy'],
-                    flags1: val['flags1'],
-                    reserved2: val['reserved2'],
-                    reserved3: val['reserved3'],
-                    create_time: ctx.helper.getDate(),
-                    update_time: ctx.helper.getDate()
-                };
-                ctx.service.voterService.getCount(val['owner']).then(result => {
-                    if (result > 0) {
-                        delete voters.id;
-                        delete voters.create_time;
-                        ctx.service.voterService.update(val['owner'], voters);
-                    } else {
-                        const submitResult = ctx.service.voterService.create(voters);
-                    }
+            val['producers'].forEach(function (p) {
+                ctx.service.superNodeService.findByName(p).then(result => {
+                    const voters = {
+                        id: ctx.helper.createID(),
+                        owner: val['owner'],
+                        node_bp_id: result.id,
+                        proxy: val['proxy'],
+                        producers: JSON.stringify(val['producers']),
+                        staked: NP.divide(val['staked'], 10000),
+                        last_vote_weight: val['last_vote_weight'],
+                        proxied_vote_weight: val['proxied_vote_weight'],
+                        is_proxy: val['is_proxy'],
+                        flags1: val['flags1'],
+                        reserved2: val['reserved2'],
+                        reserved3: val['reserved3'],
+                        create_time: ctx.helper.getDate(),
+                        update_time: ctx.helper.getDate()
+                    };
+                    ctx.service.voterService.getCount(val['owner']).then(result => {
+                        if (result > 0) {
+                            delete voters.id;
+                            delete voters.create_time;
+                            ctx.service.voterService.update(val['owner'], voters);
+                        } else {
+                            const submitResult = ctx.service.voterService.create(voters);
+                        }
+                    });
                 });
             });
         });
