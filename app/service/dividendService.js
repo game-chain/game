@@ -82,20 +82,22 @@ class dividendService extends Service {
                         let totalReward = NP.times(vote_proportion, 0.8).toFixed(10);
                         //根据所投票占比计算奖励
                         let vote_reward = NP.times(totalReward, vote_proportion).toFixed(10);
-                        ctx.logger.info(ctx.helper.getDate() + '------结算用户：' + voterVal.owner + '已完成...');
-                        let dividend = {
-                            id: ctx.helper.createID(),
-                            periods_id: periodsId,
-                            owner: voterVal.owner,
-                            node_bp_id: nodeVal.id,
-                            node_bp_json: JSON.stringify(nodeVal),
-                            vote_proportion: vote_proportion,
-                            vote_reward: vote_reward,
-                            is_reward: false,
-                            create_time: ctx.helper.getDate()
-                        };
-                        ctx.service.dividendService.create(dividend);
-                        app.kue.create('transfer', {id: dividend.id}).ttl(10).save();
+                        if (vote_reward > 0) {
+                            ctx.logger.info(ctx.helper.getDate() + '------结算用户：' + voterVal.owner + '已完成...');
+                            let dividend = {
+                                id: ctx.helper.createID(),
+                                periods_id: periodsId,
+                                owner: voterVal.owner,
+                                node_bp_id: nodeVal.id,
+                                node_bp_json: JSON.stringify(nodeVal),
+                                vote_proportion: vote_proportion,
+                                vote_reward: vote_reward,
+                                is_reward: false,
+                                create_time: ctx.helper.getDate()
+                            };
+                            ctx.service.dividendService.create(dividend);
+                            app.kue.create('transfer', {id: dividend.id}).ttl(10).save();
+                        }
                     });
                 }
                 return;

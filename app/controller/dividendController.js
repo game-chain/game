@@ -59,7 +59,7 @@ class dividendController extends Controller {
         let result = await this.ctx.service.dividendService.list([], parseInt(query.start), parseInt(query.length));
         result.rows.forEach(function (val, index, key) {
             val.setDataValue('vote_proportion', NP.times(NP.plus(val.vote_proportion, 0).toFixed(4), 100) + '%');
-            val.setDataValue('vote_reward', NP.plus(val.vote_reward, 0).toFixed(4));
+            val.setDataValue('vote_reward', NP.plus(val.vote_reward, 0).toFixed(10));
         });
         this.success(result);
     }

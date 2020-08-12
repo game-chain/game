@@ -138,15 +138,17 @@
                                     </div>
                                     <div class="modal-body">
                                         <h4 class="modal-heading mb-4 mt-2">说明</h4>
-                                        <p class="modal-text">1.请设置为Cron格式，任务会按照设置的格式自动运行;</p>
-                                        <p class="modal-text">2.如需停止或启动任务请在-奖励记录-任务状态中停止即可;</p>
-                                        <p class="modal-text">3.设置时请严格按照要求填写，错误的格式可能会导致无法正常运行等情况。</p>
+                                        <p class="modal-text text-warning">1.请设置为Cron格式，任务会按照设置的格式自动运行;</p>
+                                        <p class="modal-text text-warning">2.如需停止或启动任务请在-奖励记录-奖励任务状态中选择对应操作即可;</p>
+                                        <p class="modal-text text-warning">
+                                            3.设置时请严格按照要求填写，错误的格式会导致程序无法正常运行、奖励定时发放异常等情况，请谨慎操作!</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
+                                        <button class="btn btn-primary" data-dismiss="modal"><i
+                                                class="flaticon-cancel-12"></i>
                                             取消
                                         </button>
-                                        <button type="submit" class="btn btn-primary" id="cycle_submit">保存</button>
+                                        <button type="submit" class="btn btn-warning" id="cycle_submit">保存</button>
                                     </div>
                                 </form>
                             </div>
