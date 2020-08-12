@@ -276,7 +276,17 @@
                         }
                     }
                 },
-                {"data": "transaction_time"},
+                {
+                    "data": "transaction_time",
+                    "render": function (data, type, full, meta) {
+                        if (data) {
+                            console.log(data);
+                            return data;
+                        } else {
+                            return '暂无';
+                        }
+                    }
+                },
                 {"data": "create_time"}
             ],
             language: {

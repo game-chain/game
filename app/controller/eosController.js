@@ -44,13 +44,19 @@ class EosController extends Controller {
         const param = ctx.query;
         let node = await this.ctx.service.superNodeService.find(param.nodeId);
         let result = await this.ctx.service.voterService.list({'node_bp_id': param.nodeId}, 1, 10);
+        let nodeTotalStaked = await this.ctx.service.voterService.getStakedByBp(node.id);
+        node.setDataValue('total_votes', NP.plus(nodeTotalStaked, 0).toFixed(4));
         if (result) {
             result.rows.forEach(function (val, index, key) {
-                let totalReward = NP.times(val.staked, 0.8).toFixed(4);
-                val.vote_proportion = NP.divide(node.total_votes, val.staked).toFixed(4);
-                val.vote_proportion = val.vote_proportion > 100 ? 100 : val.vote_proportion;
-                val.vote_reward = NP.times(totalReward, val.vote_proportion).toFixed(4);
-                node.setDataValue('total_votes', NP.plus(node.total_votes, 0).toFixed(4));
+                let totalReward = NP.times(nodeTotalStaked, 0.8).toFixed(4);
+                val.vote_proportion = 0;
+                val.vote_reward = 0;
+                if (val.staked > 0) {
+                    val.vote_proportion = NP.divide(val.staked, nodeTotalStaked).toFixed(4);
+                    val.vote_proportion = val.vote_proportion >= 1 ? 1 : val.vote_proportion;
+                    val.vote_reward = NP.times(totalReward, val.vote_proportion).toFixed(4);
+                    val.vote_proportion = NP.times(val.vote_proportion, 100).toFixed(4);
+                }
             });
         }
         node.setDataValue("location", node.location == 0 ? '未知' : node.location);

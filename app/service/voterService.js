@@ -110,6 +110,19 @@ class voterService extends Service {
             owner: owner
         });
     }
+
+    /**
+     * 总票数
+     * @param bpId
+     * @returns {Promise<*>}
+     */
+    async getStakedByBp(bpId) {
+        return await this.ctx.model.Voters.sum('staked', {
+            where: {
+                node_bp_id: bpId
+            }
+        });
+    }
 }
 
 module.exports = voterService;
