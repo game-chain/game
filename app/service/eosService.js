@@ -2,6 +2,7 @@
 
 const Service = require('egg').Service;
 const ecc = require('eosjs-ecc');
+const NP = require('number-precision');
 
 /**
  * @explain eos基础服务
@@ -321,7 +322,7 @@ class eosService extends Service {
                     node_bp_id: result.id,
                     proxy: val['proxy'],
                     producers: JSON.stringify(val['producers']),
-                    staked: val['staked'],
+                    staked: NP.divide(val['staked'], 10000),
                     last_vote_weight: val['last_vote_weight'],
                     proxied_vote_weight: val['proxied_vote_weight'],
                     is_proxy: val['is_proxy'],
@@ -331,7 +332,15 @@ class eosService extends Service {
                     create_time: ctx.helper.getDate(),
                     update_time: ctx.helper.getDate()
                 };
-                const submitResult = ctx.service.voterService.create(voters);
+                ctx.service.voterService.getCount(val['owner']).then(result => {
+                    if (result > 0) {
+                        delete voters.id;
+                        delete voters.create_time;
+                        ctx.service.voterService.update(val['owner'], voters);
+                    } else {
+                        const submitResult = ctx.service.voterService.create(voters);
+                    }
+                });
             });
         });
     }

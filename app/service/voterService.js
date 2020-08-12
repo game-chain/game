@@ -73,16 +73,18 @@ class voterService extends Service {
 
     /**
      * 更新
-     * @param id
+     * @param owner
      * @param updates
      * @returns {Promise<*>}
      */
-    async update({id, updates}) {
-        const voters = await this.ctx.model.Voters.findByPk(id);
+    async update(owner, updates) {
+        const voters = await this.ctx.model.Voters.findOne({
+            owner: owner
+        });
         if (!voters) {
-            this.ctx.throw(404, 'user not found');
+            return false;
         }
-        return Voters.update(updates);
+        return voters.update(updates);
     }
 
     /**
@@ -91,11 +93,22 @@ class voterService extends Service {
      * @returns {Promise<*>}
      */
     async del(id) {
-        const voters = await this.ctx.model.voters.findByPk(id);
+        const voters = await this.ctx.model.Voters.findByPk(id);
         if (!voters) {
             this.ctx.throw(404, 'voters not found');
         }
         return Voters.destroy();
+    }
+
+    /**
+     *
+     * @param owner
+     * @returns {Promise<*>}
+     */
+    async getCount(owner) {
+        return await this.ctx.model.Voters.count({
+            owner: owner
+        });
     }
 }
 
