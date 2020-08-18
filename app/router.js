@@ -33,7 +33,7 @@ module.exports = app => {
     router.all('/get.vote.data', adminAuth, controller.voteRecordingController.data);
     router.all('/get.node.data', adminAuth, controller.eosController.nodeData);
     router.all('/get.transfer.data', adminAuth, controller.commonController.transferData);
-    
+
     router.post('/user.password', adminAuth, controller.userController.password);
 
     //同步投票信息

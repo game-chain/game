@@ -35,12 +35,36 @@ class voteRecordingService extends Service {
      */
     async create(owner, bp_name, ticket) {
         const {ctx} = this;
-        return await this.ctx.model.VoteRecording.create({
-            id: ctx.helper.createID(),
-            owner: owner,
-            bp_name: bp_name,
-            ticket: ticket,
-            create_time: ctx.helper.getDate()
+        let result = await this.findByName(owner);
+        if (!result) {
+            return await this.ctx.model.VoteRecording.create({
+                id: ctx.helper.createID(),
+                owner: owner,
+                bp_name: bp_name,
+                ticket: ticket,
+                create_time: ctx.helper.getDate()
+            });
+        } else {
+            let bpNode = await ctx.service.superNodeService.findByName(bp_name);
+            if (bpNode) {
+                result.update({
+                    bp_name: bp_name,
+                    ticket: ticket
+                });
+            }
+        }
+    }
+    
+    /**
+     * 根据用户名称查询投票记录
+     * @param name
+     * @returns {Promise<*>}
+     */
+    async findByName(owner) {
+        return this.ctx.model.VoteRecording.findOne({
+            where: {
+                owner: owner
+            }
         });
     }
 
