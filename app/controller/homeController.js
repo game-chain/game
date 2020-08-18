@@ -11,19 +11,61 @@ class HomeController extends Controller {
     }
 
     async test() {
-        const {app, ctx} = this;
-        let url = 'http://8.210.114.177:8080/nos-iot/v1/noschain/getTotalNodes';
-        let result = await ctx.curl(url, {
-            method: "GET",
-            dataType: "json",
-            headers: {
-                "content-type": "application/json"
-            },
-            timeout: 50000
-        });
-        result.data.Data.forEach(function (bp, bpIndex, bpKey) {
-            console.log(bp['owner']);
-        });
+        let data = {};
+        data.id = '5461433269880111458';
+        const {ctx, app} = this;
+        ctx.logger.info('处理奖励编号:' + data.id);
+        try {
+            let userReward = await ctx.service.dividendService.find(data.id);
+            if (!userReward) {
+                return;
+            }
+            if (userReward.is_reward) {
+                return;
+            }
+
+            let eosConfig = app.config.eos;
+            let url = eosConfig.gameApi + 'nos-iot/v1/noschain/transfer';
+            let result = await ctx.curl(url, {
+                method: "POST",
+                dataType: "json",
+                headers: {
+                    "content-type": "application/json"
+                },
+                data: {
+                    "from": eosConfig.account,
+                    "to": userReward.owner,
+                    //NP.times(userReward.vote_reward, 10000).toFixed(18)
+                    "quantity": 1,
+                    "memo": "节点投票奖励",
+                    "tokenType": "GAME",
+                    "walletPrivateKey": eosConfig.privateKey
+                },
+                timeout: 50000
+            });
+            console.log(result);
+            if (result.data.StatusCode == 200) {
+                let transactionJson = result.data;
+                let timestamp = result.Timestamp;
+                let transactionId = result.data.Data.transaction_id;
+                await ctx.service.dividendService.update(data.id, {
+                    is_reward: 1,
+                    transaction_id: transactionId,
+                    //transaction_time: ctx.helper.formatToDayTime(timestamp)
+                    transaction_time: ctx.helper.getDate()
+                });
+
+                await ctx.service.dividendDetailsService.create({
+                    id: ctx.helper.createID(),
+                    transaction_id: transactionId,
+                    transaction_json: JSON.stringify(transactionJson)
+                });
+
+            }
+            this.success();
+        } catch (e) {
+            ctx.logger.error('处理奖励交易出错：' + e);
+        }
     }
 
     async tran() {

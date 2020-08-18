@@ -73,7 +73,7 @@ class dividendService extends Service {
         voters.rows.forEach(function (voterVal, voterIndex, voterKey) {
 
             node.rows.forEach(function (nodeVal, index, nodeKey) {
-
+                //总票数
                 if (voterVal.node_bp_id == nodeVal.id) {
                     ctx.service.voterService.getStakedByBp(nodeVal.id).then(nodeTotalStaked => {
                         //当前投票用户的占比
@@ -82,7 +82,7 @@ class dividendService extends Service {
                         let totalReward = NP.times(vote_proportion, 0.8).toFixed(10);
                         //根据所投票占比计算奖励
                         let vote_reward = NP.times(totalReward, vote_proportion).toFixed(10);
-                        if (vote_reward > 0) {
+                        if (vote_reward >= 1) {
                             ctx.logger.info(ctx.helper.getDate() + '------结算用户：' + voterVal.owner + '已完成...');
                             let dividend = {
                                 id: ctx.helper.createID(),

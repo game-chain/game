@@ -69,9 +69,7 @@ class App {
         app.kue.process('transfer', function (job, done) {
             const ctx = app.createAnonymousContext();
             ctx.service.rewardService.transfer(job.data, done);
-            done();
         });
-
         this.app.logger.warn('服务已经启动...');
         this.app.logger.warn('启动耗时 %d ms', Date.now() - this.start);
 
