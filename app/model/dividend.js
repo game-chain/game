@@ -19,7 +19,7 @@ module.exports = app => {
         },
         periods_id: BIGINT(30),
         owner: STRING(100),
-        node_bp_id: BIGINT(30),
+        bp_owner: STRING(100),
         node_bp_json: TEXT,
         vote_proportion: DECIMAL(12, 10),
         vote_reward: DECIMAL(12, 10),

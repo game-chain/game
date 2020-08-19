@@ -61,34 +61,23 @@ class dividendService extends Service {
      */
     async reward() {
         const {app, ctx} = this;
-
-        ctx.logger.info('开始结算用户投票奖励：')
-
-        let node = await ctx.service.superNodeService.getAll();
+        let node = await ctx.service.nodeBlockService.getAll();
         let voters = await ctx.service.voterService.getAll();
-
-        //期数
-        const periodsId = ctx.helper.createID();
-
         voters.rows.forEach(function (voterVal, voterIndex, voterKey) {
-
             node.rows.forEach(function (nodeVal, index, nodeKey) {
                 //总票数
-                if (voterVal.node_bp_id == nodeVal.id) {
+                if (voterVal.bp_owner == nodeVal.owner) {
                     ctx.service.voterService.getStakedByBp(nodeVal.id).then(nodeTotalStaked => {
                         //当前投票用户的占比
                         let vote_proportion = NP.divide(voterVal.staked, nodeTotalStaked).toFixed(4);
-                        // 超级节点只拿出80%来奖励给投票用户
-                        let totalReward = NP.times(vote_proportion, 0.8).toFixed(10);
-                        //根据所投票占比计算奖励
-                        let vote_reward = NP.times(totalReward, vote_proportion).toFixed(10);
+                        let vote_reward = NP.times(node.vote_quantity, vote_proportion).toFixed(10);
                         if (vote_reward >= 1) {
                             ctx.logger.info(ctx.helper.getDate() + '------结算用户：' + voterVal.owner + '已完成...');
                             let dividend = {
                                 id: ctx.helper.createID(),
-                                periods_id: periodsId,
+                                periods_id: nodeVal.periods,
                                 owner: voterVal.owner,
-                                node_bp_id: nodeVal.id,
+                                bp_owner: nodeVal.id,
                                 node_bp_json: JSON.stringify(nodeVal),
                                 vote_proportion: vote_proportion,
                                 vote_reward: vote_reward,
@@ -100,8 +89,9 @@ class dividendService extends Service {
                         }
                     });
                 }
-                return;
             });
+            //更改更改奖励状态
+            ctx.service.nodeBlockService.update(nodeVal.periods, nodeVal.owner, {is_issue: 1});
         });
     }
 

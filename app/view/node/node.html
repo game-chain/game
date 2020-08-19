@@ -252,7 +252,7 @@
                 "targets": 6,//操作按钮目标列
                 "data": null,
                 "render": function (data, type, row) {
-                    var id = '"' + row.id + '"';
+                    var id = '"' + row.owner + '"';
                     var total_ticket = '"' + row.total_ticket + '"';
                     var html = "<button class='btn btn-outline-primary btn-sm' onclick='details(" + id + "," + total_ticket + ")'>投票信息</button>"
                     return html;
@@ -272,7 +272,7 @@
             shadeClose: true,
             shade: 0.8,
             area: ['80%', '90%'],
-            content: '/voters?nodeId=' + id + "&total_ticket=" + total_ticket
+            content: '/voters?owner=' + id + "&total_ticket=" + total_ticket
         });
     }
 

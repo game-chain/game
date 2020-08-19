@@ -15,7 +15,7 @@ module.exports = app => {
             primaryKey: true, //主键
             unique: true,//唯一
         },
-        node_bp_id: BIGINT(20),
+        bp_owner: STRING(100),
         owner: STRING(100),
         proxy: STRING(100),
         producers: TEXT,

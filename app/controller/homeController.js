@@ -10,82 +10,77 @@ class HomeController extends Controller {
         await ctx.render('index/index.html');
     }
 
+
+    //结算工资
     async test() {
-        let data = {};
-        data.id = '5461433269880111458';
         const {ctx, app} = this;
-        ctx.logger.info('处理奖励编号:' + data.id);
-        try {
-            let userReward = await ctx.service.dividendService.find(data.id);
-            if (!userReward) {
-                return;
-            }
-            if (userReward.is_reward) {
-                return;
-            }
 
-            let eosConfig = app.config.eos;
-            let url = eosConfig.gameApi + 'nos-iot/v1/noschain/transfer';
-            let result = await ctx.curl(url, {
-                method: "POST",
-                dataType: "json",
-                headers: {
-                    "content-type": "application/json"
-                },
-                data: {
-                    "from": eosConfig.account,
-                    "to": userReward.owner,
-                    //NP.times(userReward.vote_reward, 10000).toFixed(18)
-                    "quantity": 1,
-                    "memo": "节点投票奖励",
-                    "tokenType": "GAME",
-                    "walletPrivateKey": eosConfig.privateKey
-                },
-                timeout: 50000
-            });
-            console.log(result);
-            if (result.data.StatusCode == 200) {
-                let transactionJson = result.data;
-                let timestamp = result.Timestamp;
-                let transactionId = result.data.Data.transaction_id;
-                await ctx.service.dividendService.update(data.id, {
-                    is_reward: 1,
-                    transaction_id: transactionId,
-                    //transaction_time: ctx.helper.formatToDayTime(timestamp)
-                    transaction_time: ctx.helper.getDate()
-                });
+        return this.success(await ctx.service.superNodeService.claimrewards());
 
-                await ctx.service.dividendDetailsService.create({
-                    id: ctx.helper.createID(),
-                    transaction_id: transactionId,
-                    transaction_json: JSON.stringify(transactionJson)
-                });
-
+        // const api = await ctx.helper.eosApi();
+        // let result = await api.transact(
+        //     {
+        //         actions: [{
+        //             account: 'eosio',
+        //             name: 'claimrewards',
+        //             authorization: [{actor: 'gameclaimrel', permission: 'active'}],
+        //             data: {
+        //                 owner: 'gamebp5'
+        //             },
+        //         }],
+        //     },
+        //     // 滞后块数，整数 // 超时秒数，整数
+        //     {blocksBehind: 3, expireSeconds: 30})
+        let result = {
+            code: 200,
+            data: {
+                processed: {
+                    action_traces: {
+                        act: {
+                            data: {
+                                owner: "gamebp5"
+                            }
+                        },
+                        inline_traces: [
+                            {
+                                act: {
+                                    data: {
+                                        quantity: "13906.8288  "
+                                    }
+                                }
+                            },
+                            {
+                                act: {
+                                    data: {
+                                        quantity: "2781.3657 "
+                                    }
+                                }
+                            },
+                            {
+                                act: {
+                                    data: {
+                                        quantity: "11125.4631 "
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
             }
-            this.success();
-        } catch (e) {
-            ctx.logger.error('处理奖励交易出错：' + e);
-        }
+        };
+        const periods = ctx.helper.createID();
+        let nodeBlock = {
+            periods: periods,
+            owner: result.data.processed.action_traces.act.data.owner,
+            total_quantity: result.data.processed.action_traces.inline_traces[0].act.data.quantity,
+            node_quantity: result.data.processed.action_traces.inline_traces[1].act.data.quantity,
+            vote_quantity: result.data.processed.action_traces.inline_traces[2].act.data.quantity,
+            processed_json: JSON.stringify(result),
+            crate_time: ctx.helper.getDate()
+        };
+        ctx.service.nodeBlockService.create(nodeBlock);
     }
 
-    async tran() {
-
-        /**
-         * 自动进行事务管理
-         */
-        const result = await this.app.mysql.beginTransactionScope(async conn => {
-            const result = await conn.insert('tz_currency',
-                {
-                    id: this.ctx.helper.createID(),
-                    cname: 'BTC',
-                    nickname: '比特币',
-                    is_forbidden: false,
-                    create_time: this.ctx.helper.getDate()
-                });
-            return {success: result.affectedRows === 1};
-        }, this.ctx);
-        this.success(result);
-    }
 }
 
 module.exports = HomeController;

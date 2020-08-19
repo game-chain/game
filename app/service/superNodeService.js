@@ -10,6 +10,43 @@ const Service = require('egg').Service;
 class superNodeService extends Service {
 
     /**
+     * 结算工资
+     * @returns {Promise<void>}
+     */
+    async claimrewards() {
+        const {ctx, app} = this;
+        const api = await ctx.helper.eosApi();
+        let nodes = await ctx.model.SuperNode.findAndCountAll();
+        const periods = ctx.helper.createID();
+        nodes.rows.forEach(function (node, nodeIndex, nodeKey) {
+            api.transact(
+                {
+                    actions: [{
+                        account: 'eosio',
+                        name: 'claimrewards',
+                        authorization: [{actor: 'gameclaimrel', permission: 'active'}],
+                        data: {
+                            owner: node.owner
+                        },
+                    }],
+                },
+                {blocksBehind: 3, expireSeconds: 30}
+            ).then(function (result) {
+                let nodeBlock = {
+                    periods: periods,
+                    owner: result.data.processed.action_traces.act.data.owner,
+                    total_quantity: result.data.processed.action_traces.inline_traces[0].act.data.quantity,
+                    node_quantity: result.data.processed.action_traces.inline_traces[1].act.data.quantity,
+                    vote_quantity: result.data.processed.action_traces.inline_traces[2].act.data.quantity,
+                    processed_json: JSON.stringify(result),
+                    crate_time: ctx.helper.getDate()
+                };
+                ctx.service.nodeBlockService.create(nodeBlock);
+            })// 滞后块数，整数 // 超时秒数，整数
+        })
+    }
+
+    /**
      * 根据名称查询超级节点
      * @param name
      * @returns {Promise<*>}
@@ -21,7 +58,7 @@ class superNodeService extends Service {
             }
         });
     }
-
+    
     /**
      * 列出所有超级节点
      * @param offset

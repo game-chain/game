@@ -40,9 +40,9 @@ class EosController extends Controller {
     async voters() {
         const {app, ctx} = this;
         const param = ctx.query;
-        let node = await this.ctx.service.superNodeService.find(param.nodeId);
-        let result = await this.ctx.service.voterService.list({'node_bp_id': param.nodeId}, 1, 10);
-        let nodeTotalStaked = await this.ctx.service.voterService.getStakedByBp(node.id);
+        let node = await this.ctx.service.superNodeService.findByName(param.owner);
+        let result = await this.ctx.service.voterService.list({'bp_owner': param.owner}, 1, 10);
+        let nodeTotalStaked = await this.ctx.service.voterService.getStakedByBp(node.owner);
         node.setDataValue('total_votes', NP.plus(nodeTotalStaked, 0).toFixed(4));
         if (result) {
             result.rows.forEach(function (val, index, key) {

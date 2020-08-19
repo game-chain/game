@@ -3,19 +3,20 @@
 const Service = require('egg').Service;
 
 /**
- * @explain game eos 表数据
+ * @explain 出块结算
  * @author xiaoping
  * @date 2020.3.26
  */
-class voterService extends Service {
+class nodeBlockService extends Service {
+
 
     /**
-     * 查询当个投票用户
+     * 查询单个节点出块工资
      * @param name
      * @returns {Promise<*>}
      */
     async findByName(name) {
-        return this.ctx.model.Voters.findOne({
+        return this.ctx.model.NodeBlock.findOne({
             where: {
                 owner: name
             }
@@ -23,14 +24,14 @@ class voterService extends Service {
     }
 
     /**
-     * 所有投票用户
+     * 所有超级节点出块工资
      * @param offset
      * @param limit
      * @param where
      * @returns {Promise<*>}
      */
     async list(where, page, limit) {
-        return this.ctx.model.Voters.findAndCountAll({
+        return this.ctx.model.NodeBlock.findAndCountAll({
             where: where,
             offset: page,
             limit: limit,
@@ -39,14 +40,20 @@ class voterService extends Service {
     }
 
     /**
-     * 所有投票用户
+     * 所有未发放的奖励
      * @param where
      * @param offset
      * @param limit
      * @returns {Promise<*>}
      */
     async getAll() {
-        return this.ctx.model.Voters.findAndCountAll();
+        return this.ctx.model.NodeBlock.findAndCountAll(
+            {
+                where: {
+                    'is_issue': 0
+                }
+            }
+        );
     }
 
     /**
@@ -55,7 +62,7 @@ class voterService extends Service {
      * @returns {Promise<*>}
      */
     async find(id) {
-        const voters = await this.ctx.model.Voters.findByPk(id);
+        const voters = await this.ctx.model.NodeBlock.findByPk(id);
         if (!voters) {
             this.ctx.throw(404, 'voters not found');
         }
@@ -68,7 +75,7 @@ class voterService extends Service {
      * @returns {Promise<Voters>}
      */
     async create(voters) {
-        return this.ctx.model.Voters.create(voters);
+        return this.ctx.model.NodeBlock.create(voters);
     }
 
     /**
@@ -77,9 +84,10 @@ class voterService extends Service {
      * @param updates
      * @returns {Promise<*>}
      */
-    async update(owner, updates) {
-        const voters = await this.ctx.model.Voters.findOne({
-            owner: owner
+    async update(periods, owner, updates) {
+        const voters = await this.ctx.model.NodeBlock.findOne({
+            owner: owner,
+            periods: periods
         });
         if (!voters) {
             return false;
@@ -93,7 +101,7 @@ class voterService extends Service {
      * @returns {Promise<*>}
      */
     async del(id) {
-        const voters = await this.ctx.model.Voters.findByPk(id);
+        const voters = await this.ctx.model.NodeBlock.findByPk(id);
         if (!voters) {
             this.ctx.throw(404, 'voters not found');
         }
@@ -101,28 +109,14 @@ class voterService extends Service {
     }
 
     /**
-     *
      * @param owner
      * @returns {Promise<*>}
      */
     async getCount(owner) {
-        return await this.ctx.model.Voters.count({
+        return await this.ctx.model.NodeBlock.count({
             owner: owner
-        });
-    }
-
-    /**
-     * 总票数
-     * @param bpId
-     * @returns {Promise<*>}
-     */
-    async getStakedByBp(owner) {
-        return await this.ctx.model.Voters.sum('staked', {
-            where: {
-                bp_owner: owner
-            }
         });
     }
 }
 
-module.exports = voterService;
+module.exports = nodeBlockService;

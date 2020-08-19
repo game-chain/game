@@ -46,6 +46,7 @@ module.exports = appInfo => {
     config.eos = {
         account: 'gamevpay1111',
         privateKey: '5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8',
+        privateKey1: '5J5LD9smeFxhvisN99N9qHcmQuCVgnHM4sGkJsE53yNDZ23mAir', //申请出块工资，账号gameclaimrel
         rpcUrl: 'http://8.210.114.177:8888',
         table: 'voters',
         scope: 'eosio',

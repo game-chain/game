@@ -1,1 +1,10 @@
-{"reward":{"base":{"cron":"*/60 * * * * *","fun":"./sc/reward.js","switch":true},"cfg":"{\"rUrl\":\"http://test.com\"}"}}
+{
+  "reward": {
+    "base": {
+      "cron": "*/60 * * * * *",
+      "fun": "./sc/reward.js",
+      "switch": false
+    },
+    "cfg": "{\"rUrl\":\"http://test.com\"}"
+  }
+}

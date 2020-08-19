@@ -65,19 +65,25 @@ module.exports = {
      * @returns {Api} api对象
      */
     eosApi: async function () {
+        const {ctx, app} = this;
         //本地环境
-        if (this.ctx.app.config.env == 'local') {
-            const rpc = new JsonRpc('https://jungle2.cryptolions.io:443', {fetch});
-            const privateKey = '5J6R3MsgyTqid2TYudmpX33MUCwLc4ddH421HYkPK3NjZMTmpM6';
+        // if (this.ctx.app.config.env == 'local') {
+            const rpc = new JsonRpc('http://8.210.114.177:8888', {fetch});
+            const privateKey = '5J5LD9smeFxhvisN99N9qHcmQuCVgnHM4sGkJsE53yNDZ23mAir';
             const signatureProvider = new JsSignatureProvider([privateKey]);
             return new Api({rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder()});
-        } else {
-            //生产环境
-            const url = await this.getEosUrl();
-            const rpc = new JsonRpc(url, {fetch});
-            const signatureProvider = new JsSignatureProvider([this.app.config.eos.privateKey]);
-            return new Api({rpc, signatureProvider, TextEncoder: new TextDecoder(), textEncoder: new TextEncoder()});
-        }
+        // } else {
+        //     //生产环境
+        //     const url = await this.getEosUrl();
+        //     const rpc = new JsonRpc(url, {fetch});
+        //     const signatureProvider = new JsSignatureProvider([this.app.config.eos.privateKey]);
+        //     return new Api({rpc, signatureProvider, TextEncoder: new TextDecoder(), textEncoder: new TextEncoder()});
+        // }
+        //本地环境
+        // const url = app.config.eos.gameApi;
+        // const rpc = new JsonRpc(url, {fetch});
+        // const signatureProvider = new JsSignatureProvider([this.app.config.eos.privateKey1]);
+        // return new Api({rpc, signatureProvider, TextEncoder: new TextDecoder(), textEncoder: new TextEncoder()});
     },
 
     /**

@@ -64,7 +64,7 @@ class eosService extends Service {
                 actions: [{
                     account,
                     name: execFunction,
-                    authorization: [{actor: account, permission: 'active',}],
+                    authorization: [{actor: account, permission: 'active'}],
                     data: param,
                 }],
             },
@@ -101,7 +101,7 @@ class eosService extends Service {
      */
     async getActions(account_name, pos, offset) {
         let rpc = await this.ctx.helper.eosRpc();
-        return await rpc.history_get_actions('sbihgutest11', -1, -100);
+        return await rpc.history_get_actions(account_name);
     }
 
     /**
@@ -322,7 +322,7 @@ class eosService extends Service {
                     const voters = {
                         id: ctx.helper.createID(),
                         owner: val['owner'],
-                        node_bp_id: result.id,
+                        bp_owner: p,
                         proxy: val['proxy'],
                         producers: JSON.stringify(val['producers']),
                         staked: NP.divide(val['staked'], 10000),
@@ -388,7 +388,7 @@ class eosService extends Service {
 
         result.Data.rows.forEach(function (val, index, key) {
             bpInfo.Data.forEach(function (bp, bpIndex, bpKey) {
-                if (val['owner'] == bp['owner']) {
+                if (val['owner'] == bp['owner'] && val['is_active'] == 1) {
                     ctx.service.superNodeService.findByName(val['owner']).then(result => {
                         let details = {
                             is_active: val['is_active'],
