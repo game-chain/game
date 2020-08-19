@@ -19,7 +19,7 @@ class voteRecordingService extends Service {
      */
     async getList(owner, page, limit) {
         const {app, ctx} = this;
-        let offset = page <= 0 ? 1 : page;
+        let offset = page <= 0 ? 0 : page;
         limit = limit > 100 || limit <= 0 ? 10 : limit;
         offset = (offset - 1) * limit;
         return await ctx.model.VoteRecording.findAndCountAll({
@@ -49,12 +49,13 @@ class voteRecordingService extends Service {
             if (bpNode) {
                 result.update({
                     bp_name: bp_name,
-                    ticket: ticket
+                    ticket: ticket,
+                    create_time: ctx.helper.getDate()
                 });
             }
         }
     }
-    
+
     /**
      * 根据用户名称查询投票记录
      * @param name
@@ -78,9 +79,9 @@ class voteRecordingService extends Service {
     async list(where, page, limit) {
         return await this.ctx.model.VoteRecording.findAndCountAll({
             where: where,
-            offset: page,
-            limit: limit,
-            order: [['create_time', 'desc'], ['id', 'desc']],
+            //offset: page,
+            //limit: limit,
+            order: [['create_time', 'desc']],
         });
     }
 }

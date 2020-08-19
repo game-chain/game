@@ -41,7 +41,7 @@ class EosController extends Controller {
         const {app, ctx} = this;
         const param = ctx.query;
         let node = await this.ctx.service.superNodeService.findByName(param.owner);
-        let result = await this.ctx.service.voterService.list({'bp_owner': param.owner}, 1, 10);
+        let result = await this.ctx.service.voterService.list({'bp_owner': param.owner});
         let nodeTotalStaked = await this.ctx.service.voterService.getStakedByBp(node.owner);
         node.setDataValue('total_votes', NP.plus(nodeTotalStaked, 0).toFixed(4));
         if (result) {

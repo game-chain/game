@@ -15,7 +15,7 @@ class voterService extends Service {
      * @returns {Promise<*>}
      */
     async findByName(name) {
-        return this.ctx.model.Voters.findOne({
+        return await this.ctx.model.Voters.findOne({
             where: {
                 owner: name
             }
@@ -68,7 +68,15 @@ class voterService extends Service {
      * @returns {Promise<Voters>}
      */
     async create(voters) {
-        return this.ctx.model.Voters.create(voters);
+        const {ctx} = this;
+        let result = await this.findByName(voters.owner);
+        if (!result) {
+            return await ctx.model.Voters.create(voters);
+        } else {
+            delete voters.id;
+            delete voters.create_time;
+            result.update(voters);
+        }
     }
 
     /**

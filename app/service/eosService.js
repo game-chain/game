@@ -335,15 +335,7 @@ class eosService extends Service {
                         create_time: ctx.helper.getDate(),
                         update_time: ctx.helper.getDate()
                     };
-                    ctx.service.voterService.getCount(val['owner']).then(result => {
-                        if (result > 0) {
-                            delete voters.id;
-                            delete voters.create_time;
-                            ctx.service.voterService.update(val['owner'], voters);
-                        } else {
-                            const submitResult = ctx.service.voterService.create(voters);
-                        }
-                    });
+                    ctx.service.voterService.create(voters);
                 });
             });
         });
