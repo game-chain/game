@@ -24,7 +24,10 @@ class superNodeService extends Service {
                     actions: [{
                         account: 'eosio',
                         name: 'claimrewards',
-                        authorization: [{actor: 'gameclaimrel', permission: 'active'}],
+                        authorization: [{
+                            actor: ctx.app.config.eos.nodeRewardAccount,
+                            permission: ctx.app.config.eos.nodeRewardPermission
+                        }],
                         data: {
                             owner: node.owner
                         },

@@ -44,13 +44,23 @@ module.exports = appInfo => {
      * @type {{privateKey: string, random: string, scope: string, rpcUrl: string, account: string, table: string}}
      */
     config.eos = {
+        //奖励转账账号
         account: 'gamevpay1111',
+        //奖励转账私钥
         privateKey: '5JwUB7v5Fsd8KStZS5hzQTaUuDZAntuXQp5hb39FHcgd2ndFHa8',
-        privateKey1: '5J5LD9smeFxhvisN99N9qHcmQuCVgnHM4sGkJsE53yNDZ23mAir', //申请出块工资，账号gameclaimrel
+        //申请出块工资账号
+        nodeRewardAccount: 'gameclaimrel',
+        //申请出块权限
+        nodeRewardPermission: 'active',
+        //申请出块权限私钥
+        nodeRewardPrivateKey: '5J5LD9smeFxhvisN99N9qHcmQuCVgnHM4sGkJsE53yNDZ23mAir',
+        //节点RPC URL
         rpcUrl: 'http://8.210.114.177:8888',
+        //链上投票表名称
         table: 'voters',
         scope: 'eosio',
         code: 'eosio',
+        //区块链API
         gameApi: 'http://8.210.114.177:8080/'
     };
 
