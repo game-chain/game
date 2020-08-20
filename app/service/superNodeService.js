@@ -29,20 +29,23 @@ class superNodeService extends Service {
                             owner: node.owner
                         },
                     }],
-                },
-                {blocksBehind: 3, expireSeconds: 30}
-            ).then(function (result) {
-                let nodeBlock = {
-                    periods: periods,
-                    owner: result.data.processed.action_traces.act.data.owner,
-                    total_quantity: result.data.processed.action_traces.inline_traces[0].act.data.quantity,
-                    node_quantity: result.data.processed.action_traces.inline_traces[1].act.data.quantity,
-                    vote_quantity: result.data.processed.action_traces.inline_traces[2].act.data.quantity,
-                    processed_json: JSON.stringify(result),
-                    crate_time: ctx.helper.getDate()
-                };
-                ctx.service.nodeBlockService.create(nodeBlock);
-            })// 滞后块数，整数 // 超时秒数，整数
+                }, {blocksBehind: 3, expireSeconds: 30}).then(function (result) {
+                if (result.code == 200) {
+                    console.log(result);
+                    let nodeBlock = {
+                        periods: periods,
+                        owner: result.data.processed.action_traces.act.data.owner,
+                        total_quantity: result.data.processed.action_traces.inline_traces[0].act.data.quantity,
+                        node_quantity: result.data.processed.action_traces.inline_traces[1].act.data.quantity,
+                        vote_quantity: result.data.processed.action_traces.inline_traces[2].act.data.quantity,
+                        processed_json: JSON.stringify(result),
+                        crate_time: ctx.helper.getDate()
+                    };
+                    ctx.service.nodeBlockService.create(nodeBlock);
+                }
+            }).catch(function (e) {
+                console.log(e);
+            })
         })
     }
 
@@ -58,7 +61,7 @@ class superNodeService extends Service {
             }
         });
     }
-    
+
     /**
      * 列出所有超级节点
      * @param offset

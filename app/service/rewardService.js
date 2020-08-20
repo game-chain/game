@@ -39,13 +39,13 @@ class rewardService extends Service {
                     "from": eosConfig.account,
                     "to": userReward.owner,
                     "quantity": NP.times(userReward.vote_reward, 10000).toFixed(18),
-                    "memo": "节点投票奖励",
+                    "memo": "voter node bp reward",
                     "tokenType": "GAME",
                     "walletPrivateKey": eosConfig.privateKey
                 },
                 timeout: 50000
             });
-            
+
             if (result.data.StatusCode == 200) {
                 let transactionJson = result.data;
                 let timestamp = result.Timestamp;

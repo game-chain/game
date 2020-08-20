@@ -23,13 +23,25 @@ class EosController extends Controller {
      * @returns {Promise<void>}
      */
     async nodeData() {
+
+        const {app, ctx} = this;
+
+        let url = app.config.eos.gameApi + 'nos-iot/v1/noschain/getProducers';
+        let nodeInfo = await this.ctx.curl(url, {
+            method: "GET",
+            dataType: "json",
+            timeout: 50000
+        });
+
         const query = this.ctx.query;
         let result = await this.ctx.service.superNodeService.list([], parseInt(query.start), parseInt(query.length));
-        let totalVotes = await this.ctx.service.superNodeService.getTotalVotes();
-        result.rows.forEach(function (val, index, key) {
-            val.setDataValue('total_votes', NP.plus(val.total_votes, 0).toFixed(4));
-            val.setDataValue('total_ticket', NP.times(NP.divide(val.total_votes, totalVotes).toFixed(6), 100) + "%");
-        })
+        nodeInfo.data.Data.rows.forEach(function (nodeVal, nodeIndex, nodeKey) {
+            result.rows.forEach(function (val, index, key) {
+                if (val.owner == nodeVal.owner) {
+                    val.setDataValue('total_ticket', NP.times(NP.divide(nodeVal.total_votes, nodeInfo.data.Data.total_producer_vote_weight).toFixed(4), 100) + "%");
+                }
+            })
+        });
         this.success(result);
     }
 
