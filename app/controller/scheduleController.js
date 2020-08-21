@@ -32,7 +32,8 @@ class scheduleController extends Controller {
      * @returns {Promise<void>}
      */
     async start() {
-        const retInfo = await this.app.schex.startJob('reward');
+        await this.app.schex.deleteJob('reward')
+        await this.app.schex.startJob('reward')
         this.success();
     }
 
