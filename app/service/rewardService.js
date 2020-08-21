@@ -18,7 +18,6 @@ class rewardService extends Service {
     async transfer(data, done) {
         const {app, ctx} = this;
         ctx.logger.info('处理奖励编号:' + data.id);
-
         try {
             let userReward = await ctx.service.dividendService.find(data.id);
             if (!userReward) {
@@ -38,7 +37,8 @@ class rewardService extends Service {
                 data: {
                     "from": eosConfig.account,
                     "to": userReward.owner,
-                    "quantity": NP.times(userReward.vote_reward, 10000).toFixed(18),
+                    "quantity": NP.plus(userReward.vote_reward, 0).toFixed(18),
+                    //"quantity": 1,
                     "memo": "voter node bp reward",
                     "tokenType": "GAME",
                     "walletPrivateKey": eosConfig.privateKey
@@ -53,14 +53,14 @@ class rewardService extends Service {
                 await ctx.service.dividendService.update(data.id, {
                     is_reward: 1,
                     transaction_id: transactionId,
-                    transaction_time: ctx.helper.formatToDayTime(timestamp)
+                    transaction_time: ctx.helper.getDate()
                 });
                 await ctx.service.dividendDetailsService.create({
                     id: ctx.helper.createID(),
                     transaction_id: transactionId,
                     transaction_json: JSON.stringify(transactionJson)
                 });
-                done();
+                //done();
             }
         } catch (e) {
             ctx.logger.error('处理奖励交易出错：' + e);

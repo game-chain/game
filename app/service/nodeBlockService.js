@@ -85,16 +85,14 @@ class nodeBlockService extends Service {
      * @returns {Promise<*>}
      */
     async update(periods, owner, updates) {
-        const voters = await this.ctx.model.NodeBlock.findOne({
-            owner: owner,
-            periods: periods
+        return this.ctx.model.NodeBlock.update(updates, {
+            where: {
+                owner: owner,
+                periods: periods
+            }
         });
-        if (!voters) {
-            return false;
-        }
-        return voters.update(updates);
     }
-
+    
     /**
      * 删除
      * @param id

@@ -34,7 +34,6 @@ class superNodeService extends Service {
                     }],
                 }, {blocksBehind: 3, expireSeconds: 30}).then(function (result) {
                 if (result.code == 200) {
-                    console.log(result);
                     let nodeBlock = {
                         periods: periods,
                         owner: result.data.processed.action_traces.act.data.owner,
