@@ -105,32 +105,32 @@ class EosController extends Controller {
         await ctx.service.configService.update('reward_time', {v: ctx.request.body.cycle});
         this.app.schex.updateJob('reward',
             {
-                cron: ctx.request.body.cycle,
-                "fun": "./sc/reward.js",
+                cron: "* */" + ctx.request.body.cycle + " * * * *",
+                fun: "./sc/reward.js",
                 switch: true,
             },
             {
                 path: 'update',
             }
         );
-        var fs = require('fs');
-        //const data = await this.ctx.service.scheduleService.readJson();
-        let data = {
-            "reward": {
-                "base": {
-                    "cron": ctx.request.body.cycle,
-                    "fun": "./sc/reward.js",
-                    "switch": true
-                },
-                "cfg": "{\"rUrl\":\"http://test.com\"}"
-            }
-        };
-        fs.writeFile('config/schedule.json', JSON.stringify(data), 'utf8', function (err) {
-            if (!err) {
-                ctx.redirect('/node');
-            }
-        })
-        ctx.redirect('/node');
+        // var fs = require('fs');
+        // //const data = await this.ctx.service.scheduleService.readJson();
+        // let data = {
+        //     "reward": {
+        //         "base": {
+        //             "cron": "* */" + ctx.request.body.cycle + " * * * *",
+        //             "fun": "./sc/reward.js",
+        //             "switch": true
+        //         },
+        //         "cfg": {"rUrl": "http://test.com"}
+        //     }
+        // };
+        // fs.writeFile('config/schedule.json', JSON.stringify(data), 'utf8', function (err) {
+        //     if (!err) {
+        //         ctx.redirect('/dividend');
+        //     }
+        // })
+        ctx.redirect('/dividend');
     }
 
     /**

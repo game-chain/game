@@ -32,8 +32,7 @@ class scheduleController extends Controller {
      * @returns {Promise<void>}
      */
     async start() {
-        await this.app.schex.deleteJob('reward')
-        await this.app.schex.startJob('reward')
+        // await this.app.schex.startJob('reward');
         this.success();
     }
 
@@ -43,7 +42,7 @@ class scheduleController extends Controller {
      */
     async stop() {
         //let d = await this.app.schex.getJobStatus();
-        const retInfo = await this.app.schex.stopJob('reward');
+        // const retInfo = await this.app.schex.stopJob('reward');
         this.success();
     }
 }
