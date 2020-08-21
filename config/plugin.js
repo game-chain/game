@@ -65,7 +65,7 @@ exports.kue = {
  * @type {{package: string, enable: boolean}}
  */
 exports.schex = {
-    enable: false,
+    enable: true,
     package: 'egg-schex',
 };
 
