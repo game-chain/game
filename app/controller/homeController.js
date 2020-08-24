@@ -12,7 +12,7 @@ class HomeController extends Controller {
 
     async test() {
         const {ctx, app} = this;
-        //this.success(await ctx.service.rewardService.transfer());
+        this.success(await ctx.service.rewardService.transfer());
     }
 
     //结算工资

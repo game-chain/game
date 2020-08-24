@@ -41,15 +41,15 @@ class rewardService extends Service {
                 data: {
                     "from": eosConfig.account,
                     "to": userReward.owner,
-                    "quantity": 1,
+                    //"quantity": NP.times(userReward.vote_reward, 10000).toFixed(0),
                     //"quantity": userReward.vote_reward,
+                    "quantity": userReward.vote_reward * 10000,
                     "memo": "voter node bp reward",
                     "tokenType": "GAME",
                     "walletPrivateKey": eosConfig.privateKey
                 },
                 timeout: 50000
             });
-            
             if (result.data.StatusCode == 200) {
                 let transactionJson = result.data;
                 let timestamp = result.Timestamp;
@@ -64,6 +64,8 @@ class rewardService extends Service {
                     transaction_id: transactionId,
                     transaction_json: JSON.stringify(transactionJson)
                 });
+            } else {
+                console.log(result.data);
             }
         } catch (e) {
             ctx.logger.error('处理奖励交易出错：' + e);

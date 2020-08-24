@@ -28,8 +28,9 @@ class UpdateCache extends SchexJob {
         const {ctx, cfg} = this._job; // 获取任务的 ctx
         const {ctx: ectx, app} = this; // 获取 egg 的 ctx 和 app
         console.log(ectx.helper.getDate() + '开始运行奖励发放任务：' + this._job.name);
-        ectx.service.dividendService.reward();
 
+        //转账给对应的投票用户
+        await ectx.service.rewardService.transfer();
     }
 
     async onActStop() {
