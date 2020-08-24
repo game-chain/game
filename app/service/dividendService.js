@@ -54,7 +54,7 @@ class dividendService extends Service {
             order: [['create_time', 'desc'], ['id', 'desc']],
         });
     }
-
+    
     /**
      * 结算投票奖励
      * @returns {Promise<void>}
@@ -85,7 +85,7 @@ class dividendService extends Service {
                                 create_time: ctx.helper.getDate()
                             };
                             ctx.service.dividendService.create(dividend);
-                            app.kue.create('transfer', {id: dividend.id}).ttl(10).save();
+                            //app.kue.create('transfer', {id: dividend.id}).ttl(10).save();
                         }
                     });
                 }

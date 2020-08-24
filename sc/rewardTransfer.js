@@ -13,7 +13,6 @@ class UpdateCache extends SchexJob {
 
     constructor(ctx, sc, job) {
         super(ctx, sc, job);
-        
         this.subJobName = job.name + '-sub_t'; // 子任务名称
         this.cnt = 1;
     }
@@ -21,16 +20,16 @@ class UpdateCache extends SchexJob {
     // 任务初始化函数，在这里设置初始化数据
     onActInit() {
         this._job.ctx = Object.assign({}, init_ctx);
-        this.logger.info('[schex] sample job AddJob init');
+        this.logger.info('[schex] 初始化奖励发放任务...');
     }
 
     /** 任务处理函数 */
     async onActRun() {
         const {ctx, cfg} = this._job; // 获取任务的 ctx
         const {ctx: ectx, app} = this; // 获取 egg 的 ctx 和 app
-        // console.log('----------', this._job.name, ectx.helper.getDate(), cfg.path);
-        // this._job.msg = `${ctx.test} `;
-        console.log(ectx.helper.getDate() + '开始运行定时任务：' + this._job.name);
+        console.log(ectx.helper.getDate() + '开始运行奖励发放任务：' + this._job.name);
+        ectx.service.dividendService.reward();
+
     }
 
     async onActStop() {

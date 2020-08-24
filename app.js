@@ -66,10 +66,10 @@ class App {
      */
     async serverDidReady() {
         const {app} = this;
-        app.kue.process('transfer', function (job, done) {
-            const ctx = app.createAnonymousContext();
-            ctx.service.rewardService.transfer(job.data, done);
-        });
+        // app.kue.process('transfer', function (job, done) {
+        //     const ctx = app.createAnonymousContext();
+        //     ctx.service.rewardService.transfer(job.data, done);
+        // });
         this.app.logger.warn('服务已经启动...');
         this.app.logger.warn('启动耗时 %d ms', Date.now() - this.start);
 

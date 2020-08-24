@@ -93,10 +93,14 @@ module.exports = appInfo => {
      */
     config.sequelize = {
         dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
-        database: 'game',
-        host: '127.0.0.1',
+        // database: 'game',
+        // host: '127.0.0.1',
+        // username: "root",
+        // password: "123456",
+        database: 'game-reward',
+        host: '8.210.111.105',
         username: "root",
-        password: "123456",
+        password: "9Wvnmnj84BdRjQwm",
         port: 3306,
         timezone: '+08:00',// 设置东8区, 单单设置这个的话只有写有效**
         dialectOptions: { // 添加这个后，读取的才是设置的timezone时区时间。

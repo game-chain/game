@@ -36,10 +36,10 @@ class superNodeService extends Service {
                 if (result.code == 200) {
                     let nodeBlock = {
                         periods: periods,
-                        owner: result.data.processed.action_traces.act.data.owner,
-                        total_quantity: result.data.processed.action_traces.inline_traces[0].act.data.quantity,
-                        node_quantity: result.data.processed.action_traces.inline_traces[1].act.data.quantity,
-                        vote_quantity: result.data.processed.action_traces.inline_traces[2].act.data.quantity,
+                        owner: result.processed.action_traces.act.data.owner,
+                        total_quantity: result.processed.action_traces.inline_traces[0].act.data.quantity,
+                        node_quantity: result.processed.action_traces.inline_traces[1].act.data.quantity,
+                        vote_quantity: result.processed.action_traces.inline_traces[2].act.data.quantity,
                         processed_json: JSON.stringify(result),
                         crate_time: ctx.helper.getDate()
                     };

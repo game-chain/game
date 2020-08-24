@@ -315,7 +315,6 @@ class eosService extends Service {
         const eos = app.config.eos;
         const limit = 100;
         const result = await this.getTable(eos.code, eos.table, eos.scope, limit);
-        console.log(result);
         result.rows.forEach(function (val, index, key) {
             val['producers'].forEach(function (p) {
                 ctx.service.superNodeService.findByName(p).then(result => {

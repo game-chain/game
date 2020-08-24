@@ -15,11 +15,15 @@ class rewardService extends Service {
      * @param name
      * @returns {Promise<*>}
      */
-    async transfer(data, done) {
+    async transfer() {
         const {app, ctx} = this;
-        ctx.logger.info('处理奖励编号:' + data.id);
         try {
-            let userReward = await ctx.service.dividendService.find(data.id);
+            let dividend = await ctx.model.Dividend.findOne({
+                where: {
+                    is_reward: false
+                }
+            });
+            let userReward = await ctx.service.dividendService.find(dividend.id);
             if (!userReward) {
                 return;
             }
@@ -37,20 +41,20 @@ class rewardService extends Service {
                 data: {
                     "from": eosConfig.account,
                     "to": userReward.owner,
-                    "quantity": NP.plus(userReward.vote_reward, 0).toFixed(18),
-                    //"quantity": 1,
+                    "quantity": 1,
+                    //"quantity": userReward.vote_reward,
                     "memo": "voter node bp reward",
                     "tokenType": "GAME",
                     "walletPrivateKey": eosConfig.privateKey
                 },
                 timeout: 50000
             });
-
+            
             if (result.data.StatusCode == 200) {
                 let transactionJson = result.data;
                 let timestamp = result.Timestamp;
                 let transactionId = result.data.Data.transaction_id;
-                await ctx.service.dividendService.update(data.id, {
+                await ctx.service.dividendService.update(dividend.id, {
                     is_reward: 1,
                     transaction_id: transactionId,
                     transaction_time: ctx.helper.getDate()
@@ -60,7 +64,6 @@ class rewardService extends Service {
                     transaction_id: transactionId,
                     transaction_json: JSON.stringify(transactionJson)
                 });
-                //done();
             }
         } catch (e) {
             ctx.logger.error('处理奖励交易出错：' + e);

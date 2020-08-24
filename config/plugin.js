@@ -56,7 +56,7 @@ exports.nunjucks = {
  * @type {{package: string, enable: boolean}}
  */
 exports.kue = {
-    enable: true,
+    enable: false,
     package: 'egg-kue',
 };
 

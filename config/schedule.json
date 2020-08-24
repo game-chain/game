@@ -1,8 +1,38 @@
 {
   "reward": {
     "base": {
-      "cron": "*/10 * * * * *",
+      "cron": "*/10 * * * *",
       "fun": "./sc/reward.js",
+      "switch": true
+    },
+    "cfg": {
+      "rUrl": "http://test.com"
+    }
+  },
+  "rewardTransfer": {
+    "base": {
+      "cron": "*/10 * * * *",
+      "fun": "./sc/rewardTransfer.js",
+      "switch": true
+    },
+    "cfg": {
+      "rUrl": "http://test.com"
+    }
+  },
+  "synchronizeCollection": {
+    "base": {
+      "cron": "*/10 * * * *",
+      "fun": "./sc/synchronizeCollection.js",
+      "switch": true
+    },
+    "cfg": {
+      "rUrl": "http://test.com"
+    }
+  },
+  "synchronizeSuperNode": {
+    "base": {
+      "cron": "*/10 * * * *",
+      "fun": "./sc/synchronizeSuperNode.js",
       "switch": true
     },
     "cfg": {
