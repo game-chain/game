@@ -14,6 +14,7 @@ class superNodeService extends Service {
      * @returns {Promise<void>}
      */
     async claimrewards() {
+        
         const {ctx, app} = this;
         const api = await ctx.helper.eosApi();
         let nodes = await ctx.model.SuperNode.findAndCountAll();
@@ -36,10 +37,7 @@ class superNodeService extends Service {
                 if (result.code == 200) {
                     let nodeBlock = {
                         periods: periods,
-                        owner: result.processed.action_traces.act.data.owner,
-                        total_quantity: result.processed.action_traces.inline_traces[0].act.data.quantity,
-                        node_quantity: result.processed.action_traces.inline_traces[1].act.data.quantity,
-                        vote_quantity: result.processed.action_traces.inline_traces[2].act.data.quantity,
+                        owner: node.owner,
                         processed_json: JSON.stringify(result),
                         crate_time: ctx.helper.getDate()
                     };
@@ -48,7 +46,18 @@ class superNodeService extends Service {
             }).catch(function (e) {
                 console.log(e);
             })
-        })
+        });
+
+        let nodeBlock = await ctx.service.nodeBlockService.getAll();
+        nodeBlock.rows.forEach(function (nodeVal) {
+            let node = JSON.parse(nodeVal.processed_json);
+            let nodeBlock = {
+                total_quantity: node.processed.action_traces[0].inline_traces[0].act.data.quantity.replace('GAME', ''),
+                node_quantity: node.processed.action_traces[0].inline_traces[1].act.data.quantity.replace('GAME', ''),
+                vote_quantity: node.processed.action_traces[0].inline_traces[2].act.data.quantity.replace('GAME', '')
+            };
+            ctx.service.nodeBlockService.update(nodeVal.periods, node.processed.action_traces[0].act.data.owner, nodeBlock);
+        });
     }
 
     /**
