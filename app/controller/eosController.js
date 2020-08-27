@@ -92,8 +92,7 @@ class EosController extends Controller {
      */
     async synchronizeSuperNode() {
         const {app, ctx} = this;
-        let result = await this.ctx.service.eosService.superNode();
-        this.success();
+        this.success(await ctx.service.eosService.superNode());
     }
 
     /**

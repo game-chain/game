@@ -10,54 +10,57 @@ const Service = require('egg').Service;
 class superNodeService extends Service {
 
     /**
+     * 同步结算工资
+     * @param arr
+     * @returns {Promise<void>}
+     */
+    async loop(arr) {
+        const {ctx, app} = this;
+        const periods = ctx.helper.createID();
+        const api = await ctx.helper.eosApi();
+        for (const item of arr) {
+            let result = await api.transact({
+                actions: [{
+                    account: 'eosio',
+                    name: 'claimrewards',
+                    authorization: [{
+                        actor: ctx.app.config.eos.nodeRewardAccount,
+                        permission: ctx.app.config.eos.nodeRewardPermission
+                    }],
+                    data: {
+                        owner: item.owner
+                    },
+                }],
+            }, {blocksBehind: 3, expireSeconds: 30});
+            let nodeBlock = {
+                periods: periods,
+                owner: item.owner,
+                processed_json: JSON.stringify(result),
+                crate_time: ctx.helper.getDate()
+            };
+            await ctx.service.nodeBlockService.create(nodeBlock);
+        }
+    }
+
+
+    /**
      * 结算工资
      * @returns {Promise<void>}
      */
     async claimrewards() {
-        
         const {ctx, app} = this;
-        const api = await ctx.helper.eosApi();
         let nodes = await ctx.model.SuperNode.findAndCountAll();
-        const periods = ctx.helper.createID();
-        nodes.rows.forEach(function (node, nodeIndex, nodeKey) {
-            api.transact(
-                {
-                    actions: [{
-                        account: 'eosio',
-                        name: 'claimrewards',
-                        authorization: [{
-                            actor: ctx.app.config.eos.nodeRewardAccount,
-                            permission: ctx.app.config.eos.nodeRewardPermission
-                        }],
-                        data: {
-                            owner: node.owner
-                        },
-                    }],
-                }, {blocksBehind: 3, expireSeconds: 30}).then(function (result) {
-                if (result.code == 200) {
-                    let nodeBlock = {
-                        periods: periods,
-                        owner: node.owner,
-                        processed_json: JSON.stringify(result),
-                        crate_time: ctx.helper.getDate()
-                    };
-                    ctx.service.nodeBlockService.create(nodeBlock);
-                }
-            }).catch(function (e) {
-                console.log(e);
-            })
-        });
-
+        await this.loop(nodes.rows);
         let nodeBlock = await ctx.service.nodeBlockService.getAll();
-        nodeBlock.rows.forEach(function (nodeVal) {
-            let node = JSON.parse(nodeVal.processed_json);
-            let nodeBlock = {
+        for (const block of nodeBlock.rows) {
+            let node = JSON.parse(block.processed_json);
+            let nodeBlockData = {
                 total_quantity: node.processed.action_traces[0].inline_traces[0].act.data.quantity.replace('GAME', ''),
                 node_quantity: node.processed.action_traces[0].inline_traces[1].act.data.quantity.replace('GAME', ''),
                 vote_quantity: node.processed.action_traces[0].inline_traces[2].act.data.quantity.replace('GAME', '')
             };
-            ctx.service.nodeBlockService.update(nodeVal.periods, node.processed.action_traces[0].act.data.owner, nodeBlock);
-        });
+            await ctx.service.nodeBlockService.update(block.periods, node.processed.action_traces[0].act.data.owner, nodeBlockData);
+        }
     }
 
     /**

@@ -55,15 +55,15 @@ module.exports = appInfo => {
         //申请出块权限私钥
         nodeRewardPrivateKey: '5J5LD9smeFxhvisN99N9qHcmQuCVgnHM4sGkJsE53yNDZ23mAir',
         //节点RPC URL
-        rpcUrl: 'http://8.210.114.177:8888',
+        rpcUrl: 'https://www.common-game.com',
         //链上投票表名称
         table: 'voters',
         scope: 'eosio',
         code: 'eosio',
         //区块链API
-        gameApi: 'http://8.210.114.177:8080/'
+        gameApi: 'https://www.common-game.com/'
     };
-
+    
     /**
      * 无需jwt身份验证路由
      *
@@ -93,14 +93,14 @@ module.exports = appInfo => {
      */
     config.sequelize = {
         dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
-        // database: 'game',
-        // host: '127.0.0.1',
-        // username: "root",
-        // password: "123456",
-        database: 'game-reward',
-        host: '8.210.111.105',
+        database: 'game',
+        host: '127.0.0.1',
         username: "root",
-        password: "9Wvnmnj84BdRjQwm",
+        password: "123456",
+        // database: 'game-reward',
+        // host: '8.210.111.105',
+        // username: "root",
+        // password: "9Wvnmnj84BdRjQwm",
         port: 3306,
         timezone: '+08:00',// 设置东8区, 单单设置这个的话只有写有效**
         dialectOptions: { // 添加这个后，读取的才是设置的timezone时区时间。

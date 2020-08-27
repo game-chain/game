@@ -41,8 +41,6 @@ class rewardService extends Service {
                 data: {
                     "from": eosConfig.account,
                     "to": userReward.owner,
-                    //"quantity": NP.times(userReward.vote_reward, 10000).toFixed(0),
-                    //"quantity": userReward.vote_reward,
                     "quantity": userReward.vote_reward * 10000,
                     "memo": "voter node bp reward",
                     "tokenType": "GAME",

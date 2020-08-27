@@ -376,40 +376,41 @@ class eosService extends Service {
         if (result.StatusCode != 200) {
             this.ctx.throw(400, '同步超级节点信息错误');
         }
-
-        result.Data.rows.forEach(function (val, index, key) {
-            bpInfo.Data.forEach(function (bp, bpIndex, bpKey) {
-                if (val['owner'] == bp['owner'] && val['is_active'] == 1) {
-                    ctx.service.superNodeService.findByName(val['owner']).then(result => {
-                        let details = {
-                            is_active: val['is_active'],
-                            last_claim_time: val['last_claim_time'],
-                            location: val['location'],
-                            owner: val['owner'],
-                            producer_authority: JSON.stringify(val['producer_authority']),
-                            producer_key: val['producer_key'],
-                            total_votes: val['total_votes'],
-                            unpaid_blocks: val['unpaid_blocks'],
-                            url: val['url'],
-                            create_time: ctx.helper.getDate(),
-                            update_time: ctx.helper.getDate()
-                        };
-                        if (result == null) {
-                            details.id = ctx.helper.createID();
-                            ctx.service.superNodeService.create(details);
-                        } else {
-                            ctx.model.SuperNode.update(details, {
-                                where: {
-                                    id: result.id
-                                }
-                            });
-                        }
-                    }).catch(err => {
-                        this.ctx.throw(400, '同步超级节点信息错误');
-                    });
-                }
-            });
-        });
+        for (let node of result.Data.rows) {
+            if (!node['is_active']) {
+                continue;
+            }
+            let details = {
+                is_active: node['is_active'],
+                last_claim_time: node['last_claim_time'],
+                location: node['location'],
+                owner: node['owner'],
+                producer_authority: JSON.stringify(node['producer_authority']),
+                producer_key: node['producer_key'],
+                total_votes: node['total_votes'],
+                unpaid_blocks: node['unpaid_blocks'],
+                url: node['url'],
+                create_time: ctx.helper.getDate(),
+                update_time: ctx.helper.getDate()
+            };
+            let superNode = await ctx.service.superNodeService.findByName(node['owner']);
+            if (superNode == null) {
+                details.id = ctx.helper.createID();
+                await ctx.service.superNodeService.create(details);
+            } else {
+                await ctx.model.SuperNode.update(details, {
+                    where: {
+                        id: superNode.id
+                    }
+                });
+            }
+            // for (let info of bpInfo.Data) {
+            //     if (node['owner'] == info['owner'] && node['is_active'] == 1) {
+            //
+            //     }
+            // }
+        }
+        console.log('同步完成');
     }
 }
 
