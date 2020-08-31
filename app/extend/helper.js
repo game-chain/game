@@ -153,7 +153,7 @@ module.exports = {
         let day = moment.unix(new Date()).format('YYYYMMDD');
         // 2、创建图片保存的路径
         //this.config.uploadDir
-        let uploadPath = 'app/public/upload/';
+        let uploadPath = 'app/public/';
         let dir = path.join(uploadPath, day);
         await mkdirp(dir); // 不存在就创建目录
         let date = Date.now(); /* 毫秒数*/

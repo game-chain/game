@@ -203,6 +203,11 @@ module.exports = appInfo => {
         mode: 'file',
     };
 
+    exports.static = {
+        prefix: '/public/',
+        dir: ['app/public', 'app/upload']
+    };
+
     /**
      * 应用中间件配置
      *
