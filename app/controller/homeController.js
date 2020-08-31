@@ -10,69 +10,65 @@ class HomeController extends Controller {
         await ctx.render('index/index.html');
     }
 
+    async loop(arr) {
+        const {ctx, app} = this;
+        console.log('start')
+        for (const item of arr) {
+
+        }
+    }
+
     async test() {
         const {ctx, app} = this;
-        this.success(await ctx.service.rewardService.transfer());
+        //await ctx.service.rewardService.transfer();
+
+        await ctx.service.superNodeService.claimrewards();
+        this.success();
+        // let nodeBlock = await ctx.service.nodeBlockService.getAll();
+        // nodeBlock.rows.forEach(function (nodeVal) {
+        //     let node = JSON.parse(nodeVal.processed_json);
+        //     // console.log(node.processed.action_traces[0].act.data.owner);
+        //     let nodeBlock = {
+        //         total_quantity: node.processed.action_traces[0].inline_traces[0].act.data.quantity.replace('GAME', ''),
+        //         node_quantity: node.processed.action_traces[0].inline_traces[1].act.data.quantity.replace('GAME', ''),
+        //         vote_quantity: node.processed.action_traces[0].inline_traces[2].act.data.quantity.replace('GAME', '')
+        //     };
+        //     ctx.service.nodeBlockService.update(nodeVal.periods, node.processed.action_traces[0].act.data.owner, nodeBlock);
+        // });
     }
 
     //结算工资
     async test1() {
         const {ctx, app} = this;
-        // const api = await ctx.helper.eosApi();
-        // api.transact(
-        //     {
-        //         actions: [{
-        //             account: 'eosio',
-        //             name: 'claimrewards',
-        //             authorization: [{
-        //                 actor: ctx.app.config.eos.nodeRewardAccount,
-        //                 permission: ctx.app.config.eos.nodeRewardPermission
-        //             }],
-        //             data: {
-        //                 owner: 'gamebp5'
-        //             },
-        //         }],
-        //     }, {blocksBehind: 5, expireSeconds: 30}).then(function (result) {
-        //     if (result.code == 200) {
-        //         let nodeBlock = {
-        //             periods: periods,
-        //             owner: result.data.processed.action_traces.act.data.owner,
-        //             total_quantity: result.data.processed.action_traces.inline_traces[0].act.data.quantity,
-        //             node_quantity: result.data.processed.action_traces.inline_traces[1].act.data.quantity,
-        //             vote_quantity: result.data.processed.action_traces.inline_traces[2].act.data.quantity,
-        //             processed_json: JSON.stringify(result),
-        //             crate_time: ctx.helper.getDate()
-        //         };
-        //         ctx.service.nodeBlockService.create(nodeBlock);
-        //     }
-        // }).catch(function (e) {
-        //     console.log(e);
-        // })
+        await nodes.rows.forEach(function (node, nodeIndex, nodeKey) {
+            api.transact(
+                {
+                    actions: [{
+                        account: 'eosio',
+                        name: 'claimrewards',
+                        authorization: [{
+                            actor: ctx.app.config.eos.nodeRewardAccount,
+                            permission: ctx.app.config.eos.nodeRewardPermission
+                        }],
+                        data: {
+                            owner: node.owner
+                        },
+                    }],
+                }, {blocksBehind: 3, expireSeconds: 30})
+                .then(function (result) {
+                    let nodeBlock = {
+                        periods: periods,
+                        owner: node.owner,
+                        processed_json: JSON.stringify(result),
+                        crate_time: ctx.helper.getDate()
+                    };
+                    ctx.service.nodeBlockService.create(nodeBlock).then(function (nodeBlockResult) {
 
-        const api = await ctx.helper.eosApi();
-        let result = await api.transact(
-            {
-                actions: [{
-                    account: 'eosio',
-                    name: 'claimrewards',
-                    authorization: [{actor: 'gameclaimrel', permission: 'active'}],
-                    data: {
-                        owner: 'gamebp5'
-                    },
-                }],
-            }, {blocksBehind: 3, expireSeconds: 30})
-        const periods = ctx.helper.createID();
-        let nodeBlock = {
-            periods: periods,
-            owner: result.processed.action_traces.act.data.owner,
-            total_quantity: result.processed.action_traces.inline_traces[0].act.data.quantity,
-            node_quantity: result.processed.action_traces.inline_traces[1].act.data.quantity,
-            vote_quantity: result.processed.action_traces.inline_traces[2].act.data.quantity,
-            processed_json: JSON.stringify(result),
-            crate_time: ctx.helper.getDate()
-        };
-        ctx.service.nodeBlockService.create(nodeBlock);
-        return this.success(result);
+                    });
+                }).catch(function (e) {
+                console.log(e);
+            })
+        });
     }
 
 }
