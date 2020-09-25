@@ -30,7 +30,7 @@ class UpdateCache extends SchexJob {
         const {ctx: ectx, app} = this; // 获取 egg 的 ctx 和 app
         this.logger.info(ectx.helper.getDate() + '开始结算超级节点工资：' + this._job.name);
         //结算工资
-        
+        await ectx.service.dividendService.claimrewards();
     }
 
     async onActStop() {
